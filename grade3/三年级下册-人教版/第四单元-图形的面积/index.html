@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第五单元 · 面积 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .ctrl{display:flex;align-items:center;gap:12px;margin:14px 0 0;flex-wrap:wrap}
+  .ctrl label{font-size:14px;color:var(--muted);width:42px;flex:none}
+  .ctrl .val{font-size:15px;font-weight:700;width:62px;flex:none;font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1 1 140px;height:6px;border-radius:6px;background:#f0e3d3;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 1px 4px rgba(180,110,40,.35);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;cursor:pointer}
+
+  .eq{text-align:center;font-size:24px;font-weight:700;margin:16px 0 0;font-variant-numeric:tabular-nums}
+  .eq .u{color:var(--accent)}
+  .eq b{color:var(--blue)}
+  .say{text-align:center;font-size:14px;color:var(--muted);margin:6px 0 0}
+
+  .tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+  .tabs button{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:6px 16px;background:#fff;border:1.5px solid #e9dbc9;color:var(--muted);transition:.15s}
+  .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:#b96a1c;font-weight:700}
+
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 0}
+  .pair div{background:#fdf6ee;border-radius:12px;padding:10px 14px;text-align:center}
+  .pair .k{font-size:13px;color:var(--muted)}
+  .pair .v{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+  .pair .p1 .v{color:#c9761f}
+  .pair .p2 .v{color:#3f6fc4}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .eq{font-size:20px} .pair{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级下册</a> ／ 第四单元</p>
+  <h1>第四单元 · 图形的面积</h1>
+  <p class="sub">🟧 表面有多大，用方格量出来</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>面积和周长，不是一回事</h2>
+    <p class="lead">同一张桌子，问「贴一圈花边多长」是周长，问「铺满桌面要多少纸」是面积。</p>
+    <ul class="fact">
+      <li><b>周长</b>：绕一圈的长度，单位是厘米、分米、米</li>
+      <li><b>面积</b>：表面的大小，单位是平方厘米、平方分米、平方米</li>
+      <li>封闭图形才有面积</li>
+    </ul>
+    <p class="conclusion">最省事的区分法：<b>周长是线，面积是面</b>。单位带「平方」两个字的，就是面积。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>用小方格量面积</h2>
+    <p class="lead">每个小方格是 1 平方厘米，数一数铺了几个。</p>
+
+    <svg id="grid" viewBox="0 0 420 300" role="img" aria-label="用小方格量长方形面积">
+      <g id="cells"></g>
+      <rect id="outline" fill="none" stroke="#e8862e" stroke-width="3"></rect>
+      <text id="lw" text-anchor="middle" font-size="14" font-weight="700" fill="#c9761f"></text>
+      <text id="lh" text-anchor="middle" font-size="14" font-weight="700" fill="#c9761f"></text>
+    </svg>
+
+    <div class="ctrl">
+      <label for="rw">长</label>
+      <input id="rw" type="range" min="2" max="8" value="6">
+      <span class="val" id="rwv">6 厘米</span>
+    </div>
+    <div class="ctrl">
+      <label for="rh">宽</label>
+      <input id="rh" type="range" min="2" max="6" value="4">
+      <span class="val" id="rhv">4 厘米</span>
+    </div>
+
+    <p class="eq" id="eq"></p>
+    <p class="say" id="say"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>同一个图形，两个答案</h2>
+    <p class="lead">长 5 厘米、宽 3 厘米。点按钮看它算的是哪一个。</p>
+
+    <div class="tabs">
+      <button id="bp" type="button" class="on">看周长</button>
+      <button id="ba" type="button">看面积</button>
+    </div>
+
+    <svg viewBox="0 0 420 240" role="img" aria-label="周长与面积的区别">
+      <rect id="body" x="90" y="50" width="180" height="108" rx="2" fill="#f6ede1"></rect>
+      <rect id="rim" x="90" y="50" width="180" height="108" rx="2" fill="none" stroke="#e8862e" stroke-width="0"></rect>
+      <g id="ants"></g>
+    </svg>
+
+    <div class="pair">
+      <div class="p1">
+        <div class="k">周长（绕一圈）</div>
+        <div class="v" id="pv">16 厘米</div>
+      </div>
+      <div class="p2">
+        <div class="k">面积（铺满）</div>
+        <div class="v" id="av">15 平方厘米</div>
+      </div>
+    </div>
+
+    <p class="say" id="ex"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第三单元-长方形和正方形/index.html">← 第三单元 · 长方形和正方形</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第五单元-数据的收集与整理/index.html">第五单元 · 数据的收集与整理 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* ========== 数方格 ========== */
+  var CELL = 30, OX = 62, OY = 46;
+  var cells = document.getElementById('cells');
+  var outline = document.getElementById('outline');
+  var lw = document.getElementById('lw');
+  var lh = document.getElementById('lh');
+  var rw = document.getElementById('rw');
+  var rh = document.getElementById('rh');
+  var rwv = document.getElementById('rwv');
+  var rhv = document.getElementById('rhv');
+  var eq = document.getElementById('eq');
+  var say = document.getElementById('say');
+
+  function renderGrid(){
+    var w = parseInt(rw.value, 10);
+    var h = parseInt(rh.value, 10);
+    cells.innerHTML = '';
+
+    for (var r = 0; r < h; r++){
+      for (var c = 0; c < w; c++){
+        var rect = document.createElementNS(NS, 'rect');
+        rect.setAttribute('x', OX + c * CELL);
+        rect.setAttribute('y', OY + r * CELL);
+        rect.setAttribute('width', CELL);
+        rect.setAttribute('height', CELL);
+        rect.setAttribute('fill', (r + c) % 2 ? '#fdf1e4' : '#fff7ec');
+        rect.setAttribute('stroke', '#f0dcc4');
+        rect.setAttribute('stroke-width', 1);
+        cells.appendChild(rect);
+      }
+    }
+
+    outline.setAttribute('x', OX);
+    outline.setAttribute('y', OY);
+    outline.setAttribute('width', w * CELL);
+    outline.setAttribute('height', h * CELL);
+
+    lw.setAttribute('x', OX + w * CELL / 2);
+    lw.setAttribute('y', OY - 12);
+    lw.textContent = w + ' 厘米';
+
+    lh.setAttribute('x', OX - 14);
+    lh.setAttribute('y', OY + h * CELL / 2);
+    lh.setAttribute('transform', 'rotate(-90 ' + (OX - 14) + ' ' + (OY + h * CELL / 2) + ')');
+    lh.textContent = h + ' 厘米';
+
+    rwv.textContent = w + ' 厘米';
+    rhv.textContent = h + ' 厘米';
+
+    eq.innerHTML = w + ' × ' + h + ' ＝ <b>' + (w * h) + '</b> 平方厘米';
+    say.innerHTML = '横着 ' + w + ' 格，竖着 ' + h + ' 行，一共 ' + (w * h) + ' 个小方格。';
+  }
+  rw.addEventListener('input', renderGrid);
+  rh.addEventListener('input', renderGrid);
+  renderGrid();
+
+  /* ========== 周长 vs 面积 ========== */
+  var body = document.getElementById('body');
+  var rim = document.getElementById('rim');
+  var ants = document.getElementById('ants');
+  var ex = document.getElementById('ex');
+  var bp = document.getElementById('bp');
+  var ba = document.getElementById('ba');
+
+  // 长 5 宽 3，1 厘米 = 36 像素
+  var SW = 5, SH = 3, SC = 36;
+  body.setAttribute('width', SW * SC);
+  body.setAttribute('height', SH * SC);
+  rim.setAttribute('width', SW * SC);
+  rim.setAttribute('height', SH * SC);
+
+  function mode(m){
+    if (m === 'p'){
+      bp.className = 'on'; ba.className = '';
+      body.setAttribute('fill', '#f6ede1');
+      rim.setAttribute('stroke-width', 8);
+      rim.setAttribute('stroke', '#e8862e');
+      ex.innerHTML = '绕一圈：5 ＋ 3 ＋ 5 ＋ 3 ＝ <b>16</b> 厘米。这就是<b>周长</b>。';
+    } else {
+      bp.className = ''; ba.className = 'on';
+      body.setAttribute('fill', '#cfe3fb');
+      rim.setAttribute('stroke-width', 3);
+      rim.setAttribute('stroke', '#4a7fd4');
+      ex.innerHTML = '铺满： 5 × 3 ＝ <b>15</b> 平方厘米。这就是<b>面积</b>。';
+    }
+  }
+  bp.addEventListener('click', function(){ mode('p'); });
+  ba.addEventListener('click', function(){ mode('a'); });
+  mode('p');
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'一个长方形长 6 厘米、宽 4 厘米，面积是多少？',
+      opts:['20 厘米','24 平方厘米','10 平方厘米'], a:1,
+      why:'长方形面积 ＝ 长 × 宽 ＝ 6 × 4 ＝ 24（平方厘米）。' },
+    { q:'边长是 5 厘米的正方形，面积是多少？',
+      opts:['20 厘米','25 平方厘米','10 平方厘米'], a:1,
+      why:'正方形面积 ＝ 边长 × 边长 ＝ 5 × 5 ＝ 25（平方厘米）。' },
+    { q:'周长和面积，哪个是「绕一圈的长度」？',
+      opts:['周长','面积','都不是'], a:0,
+      why:'周长是绕一圈的长度（线），面积是表面的大小（面）。' },
+    { q:'1 平方分米等于多少平方厘米？',
+      opts:['10','100','1000'], a:1,
+      why:'1 分米 ＝ 10 厘米，所以 1 平方分米 ＝ 10 × 10 ＝ 100 平方厘米。' },
+    { q:'一块手帕的边长是 2 分米，它的面积是多少？',
+      opts:['8 分米','4 平方分米','2 平方分米'], a:1,
+      why:'2 × 2 ＝ 4（平方分米）。注意面积单位要带「平方」。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

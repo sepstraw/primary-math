@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第七单元 · 小数的初步认识 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .eq{text-align:center;font-size:26px;font-weight:700;margin:16px 0 0;font-variant-numeric:tabular-nums}
+  .eq .u{color:var(--accent)}
+  .eq b{color:var(--blue)}
+  .say{text-align:center;font-size:14px;color:var(--muted);margin:6px 0 0}
+  .read{text-align:center;font-size:15px;color:var(--muted);margin:2px 0 0}
+  .read b{color:var(--ink);font-size:17px}
+
+  table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums;margin:4px 0 0}
+  th,td{border:1px solid #e8dbc9;padding:8px 10px;text-align:center}
+  thead th{background:#fdf6ee}
+  tbody td:first-child{background:#fdf6ee;font-weight:600}
+  .hl{color:var(--accent);font-weight:700}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .eq{font-size:22px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级下册</a> ／ 第七单元</p>
+  <h1>第七单元 · 小数的初步认识</h1>
+  <p class="sub">🔢 把 1 平均分成 10 份，每份就是 0.1</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>小数从哪儿来</h2>
+    <p class="lead">1 米平均分成 10 份，每份是 1 分米。</p>
+    <ul class="fact">
+      <li>1 分米 ＝ <b>1/10</b> 米</li>
+      <li>1/10 米也可以写成 <b>0.1</b> 米</li>
+      <li>小数点左边是整数部分，右边是小数部分</li>
+    </ul>
+    <p class="conclusion">小数不是新东西，它就是<b>十分之几</b>的另一种写法。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>在米尺上找小数</h2>
+    <p class="lead">点尺子上的格子，看它对应的分数和小数。</p>
+
+    <svg id="ruler" viewBox="0 0 420 200" role="img" aria-label="一米的尺子分成十格">
+      <g id="ticks"></g>
+      <g id="marks"></g>
+    </svg>
+
+    <p class="eq" id="eq"></p>
+    <p class="read" id="read"></p>
+
+    <p class="hint">1 米 ＝ 10 分米，所以每一小格就是 0.1 米。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>买东西也用小数</h2>
+    <p class="lead">1 元 ＝ 10 角，所以几角就是零点几元。</p>
+
+    <table>
+      <thead><tr><th>怎么说</th><th>几元几角</th><th>写成小数</th><th>读作</th></tr></thead>
+      <tbody>
+        <tr><td>一支笔</td><td>3 元 5 角</td><td class="hl">3.5 元</td><td>三点五元</td></tr>
+        <tr><td>一块橡皮</td><td>8 角</td><td class="hl">0.8 元</td><td>零点八元</td></tr>
+        <tr><td>一本本子</td><td>2 元</td><td class="hl">2.0 元</td><td>二元</td></tr>
+        <tr><td>一个书包</td><td>48 元 6 角</td><td class="hl">48.6 元</td><td>四十八点六元</td></tr>
+      </tbody>
+    </table>
+
+    <p class="conclusion">比较小数大小时，先比<b>小数点左边</b>：9.9 元也比 10.1 元小，因为 9 ＜ 10。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第六单元-年月日/index.html">← 第六单元 · 年、月、日的秘密</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第八单元-复习与关联/index.html">第八单元 · 复习与关联 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var X0 = 40, X1 = 380, Y = 100, H = 34;
+  var SEG = (X1 - X0) / 10;
+
+  var ticks = document.getElementById('ticks');
+  var marks = document.getElementById('marks');
+  var eq = document.getElementById('eq');
+  var read = document.getElementById('read');
+  var ruler = document.getElementById('ruler');
+
+  var CN = ['零','一','二','三','四','五','六','七','八','九','十'];
+  var sel = 3;
+
+  /* 刻度 */
+  var s = '';
+  s += '<rect x="' + X0 + '" y="' + Y + '" width="' + (X1 - X0) + '" height="' + H +
+       '" rx="6" fill="#fffdfa" stroke="#e0d3c2" stroke-width="2"/>';
+  for (var i = 1; i < 10; i++){
+    var x = X0 + i * SEG;
+    s += '<line x1="' + x + '" y1="' + Y + '" x2="' + x + '" y2="' + (Y + H) +
+         '" stroke="#e8dbc9" stroke-width="1.5"/>';
+  }
+  for (var j = 0; j <= 10; j++){
+    var xx = X0 + j * SEG;
+    s += '<text x="' + xx + '" y="' + (Y + H + 22) + '" text-anchor="middle" font-size="12" fill="#a2968a">' + j + '</text>';
+  }
+  ticks.innerHTML = s;
+
+  function render(){
+    var g = '';
+    for (var k = 0; k < sel; k++){
+      g += '<rect x="' + (X0 + k * SEG) + '" y="' + Y + '" width="' + SEG +
+           '" height="' + H + '" fill="#fdd9b0" opacity="0.9"/>';
+    }
+    g += '<rect x="' + X0 + '" y="' + Y + '" width="' + (X1 - X0) + '" height="' + H +
+         '" rx="6" fill="none" stroke="#e8862e" stroke-width="2.5"/>';
+    g += '<line x1="' + (X0 + sel * SEG) + '" y1="' + (Y - 12) + '" x2="' + (X0 + sel * SEG) +
+         '" y2="' + (Y + H + 8) + '" stroke="#d05353" stroke-width="3" stroke-linecap="round"/>';
+    g += '<text x="' + (X0 + sel * SEG) + '" y="' + (Y - 20) + '" text-anchor="middle" font-size="13" font-weight="700" fill="#d05353">' +
+         (sel === 0 ? '起点' : sel + ' 分米') + '</text>';
+    marks.innerHTML = g;
+
+    if (sel === 0){
+      eq.innerHTML = '还没量';
+      read.innerHTML = '点尺子上的格子。';
+    } else {
+      eq.innerHTML = '<span class="u">' + sel + ' 分米</span> ＝ ' + sel + '/10 米 ＝ <b>0.' + sel + '</b> 米';
+      read.innerHTML = '读作 <b>零点' + CN[sel] + '</b>';
+    }
+  }
+
+  ruler.addEventListener('click', function(ev){
+    var r = ruler.getBoundingClientRect();
+    var x = (ev.clientX - r.left) / r.width * 420;
+    var k = Math.round((x - X0) / SEG);
+    k = Math.max(0, Math.min(10, k));
+    sel = k;
+    render();
+  });
+
+  render();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'1/10 写成小数是多少？', opts:['0.1','1.0','10'], a:0,
+      why:'1 平均分成 10 份，取 1 份，就是 0.1。' },
+    { q:'0.6 米是多少分米？', opts:['6 分米','60 分米','6 厘米'], a:0,
+      why:'1 米 ＝ 10 分米，0.6 米就是 6 分米。' },
+    { q:'3 元 5 角，写成小数是多少元？', opts:['3.5 元','35 元','0.35 元'], a:0,
+      why:'5 角 ＝ 0.5 元，3 元 ＋ 0.5 元 ＝ 3.5 元。' },
+    { q:'0.4 和 0.8，哪个大？', opts:['0.4','0.8','一样大'], a:1,
+      why:'整数部分都是 0，比小数部分：8 ＞ 4，所以 0.8 大。' },
+    { q:'2.5 读作（　）。', opts:['二点五','二五','二分之五'], a:0,
+      why:'小数点读作「点」，2.5 读作二点五。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

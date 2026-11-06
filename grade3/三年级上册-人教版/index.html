@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人教版三年级上册 · 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 10px}
+  h1{font-size:32px;margin:0 0 6px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 8px}
+  .done{display:inline-block;background:#e7f4ec;color:#276c4a;border-radius:999px;font-size:13px;font-weight:700;padding:3px 14px;margin:0 0 28px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .unit{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:0 1px 2px rgba(90,66,40,.04);transition:.16s;color:var(--ink)}
+  .unit:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 18px rgba(190,130,60,.12);text-decoration:none}
+  .unit .no{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;background:var(--accent-soft);color:var(--accent)}
+  .unit:nth-child(3n+2) .no{background:var(--blue-soft);color:#3f6fc4}
+  .unit:nth-child(3n+3) .no{background:#e7f4ec;color:#276c4a}
+  .unit .body{flex:1;min-width:0}
+  .unit .t{font-size:16px;font-weight:700;margin:0 0 2px}
+  .unit .d{font-size:13px;color:var(--muted);margin:0;line-height:1.6}
+  .unit .arrow{flex:none;color:#d6c8b6;font-size:18px;align-self:center}
+  .note{margin:32px 0 0;padding:14px 18px;border-radius:14px;background:#fdf6ee;font-size:14px;color:#6b6258}
+  .note + .note{margin-top:12px}
+  .note b{color:var(--ink)}
+  .note a{color:var(--accent)}
+  @media(max-width:640px){ .grid{grid-template-columns:1fr} h1{font-size:26px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../index.html">小学数学</a> ／ 三年级上册（人教版）</p>
+  <h1>人教版 · 三年级上册</h1>
+  <p class="sub">10 个单元 · 每个单元都能动手玩一下</p>
+  <p class="done">✓ 全部 10 个单元已完成</p>
+
+  <div class="grid">
+    <a class="unit" href="第一单元-观察物体/index.html">
+      <span class="no">1</span>
+      <span class="body">
+        <span class="t">观察物体</span>
+        <span class="d">搭积木，正面、右面、上面一起看</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第二单元-混合运算/index.html">
+      <span class="no">2</span>
+      <span class="body">
+        <span class="t">混合运算</span>
+        <span class="d">先算哪一步，一步一步化简</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第三单元-毫米分米和千米/index.html">
+      <span class="no">3</span>
+      <span class="body">
+        <span class="t">毫米、分米和千米</span>
+        <span class="d">在尺子上找毫米，五个单位串成链</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第四单元-曹冲称象/index.html">
+      <span class="no">4</span>
+      <span class="body">
+        <span class="t">曹冲称象</span>
+        <span class="d">天平称一称，千克和克的换算</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第五单元-多位数乘一位数/index.html">
+      <span class="no">5</span>
+      <span class="body">
+        <span class="t">多位数乘一位数</span>
+        <span class="d">拆成几块分别乘，竖式别忘了进位</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第六单元-数字编码/index.html">
+      <span class="no">6</span>
+      <span class="body">
+        <span class="t">数字编码</span>
+        <span class="d">身份证号里藏着出生日期和性别</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第七单元-线和角/index.html">
+      <span class="no">7</span>
+      <span class="body">
+        <span class="t">线和角</span>
+        <span class="d">端点决定能不能延长，角会张开</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第八单元-分数的初步认识/index.html">
+      <span class="no">8</span>
+      <span class="body">
+        <span class="t">分数的初步认识</span>
+        <span class="d">切巧克力凑分数，份数越多一份越小</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第九单元-复习与关联/index.html">
+      <span class="no">9</span>
+      <span class="body">
+        <span class="t">复习与关联</span>
+        <span class="d">九个单元串成线，自查打勾</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="unit" href="第十单元-数学广角搭配/index.html">
+      <span class="no">10</span>
+      <span class="body">
+        <span class="t">数学广角——搭配问题</span>
+        <span class="d">把 6 种搭配全配出来</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <p class="note">
+    同一个学期还有 <a href="../三年级下册-人教版/index.html">人教版（下册，8 个单元）</a>、
+    <a href="../三年级上册/index.html">苏教版（上册，8 个单元）</a>。
+  </p>
+
+</div>
+</body>
+</html>

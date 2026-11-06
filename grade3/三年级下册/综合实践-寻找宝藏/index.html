@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第九单元 · 寻找"宝藏" | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(3,52px);gap:6px;justify-content:center;margin:14px auto 0}
+  .pad button{
+    font:inherit;font-size:20px;cursor:pointer;border-radius:12px;border:1.5px solid #e9dbc9;
+    background:#fff;color:var(--ink);transition:.12s;
+  }
+  .pad button:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .pad button:active{transform:scale(.95)}
+  .pad .sp{visibility:hidden}
+  .pad .mid{font-size:13px;color:var(--muted);display:flex;align-items:center;justify-content:center;border:0;background:transparent}
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0 0;min-height:32px}
+  .chip{background:#fff;border:1.5px solid #e9dbc9;border-radius:999px;padding:3px 14px;font-size:14px;font-variant-numeric:tabular-nums}
+  .chip b{color:var(--accent)}
+
+  .status{text-align:center;font-size:15px;margin:14px 0 0;min-height:26px}
+  .status.win{color:var(--green);font-weight:700;font-size:17px}
+
+  .btn{
+    font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:7px 18px;
+    background:var(--accent);border:0;color:#fff;font-weight:600;
+  }
+  .btn:hover{background:#d5781f}
+  .btn.ghost{background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级下册</a> ／ 综合实践</p>
+  <h1>☆ 寻找“宝藏”</h1>
+  <p class="sub">🗺️ 认方向、数格子、说路线</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>八个方向</h2>
+    <p class="lead">地图上北在上，东南西北四个正方向，中间还有四个斜方向。</p>
+
+    <svg viewBox="0 0 400 200" role="img" aria-label="八个方向的指示图">
+      <circle cx="200" cy="100" r="62" fill="#fdf6ee" stroke="#efe3d4" stroke-width="2"/>
+      <circle cx="200" cy="100" r="4" fill="#3b3631"/>
+      <g font-size="14" font-weight="700" fill="#5d534a" text-anchor="middle">
+        <text x="200" y="32" fill="#d05353">北</text>
+        <text x="200" y="180">南</text>
+        <text x="320" y="105">东</text>
+        <text x="80"  y="105">西</text>
+        <text x="286" y="42" font-size="12" fill="#8a8078">东北</text>
+        <text x="114" y="42" font-size="12" fill="#8a8078">西北</text>
+        <text x="286" y="168" font-size="12" fill="#8a8078">东南</text>
+        <text x="114" y="168" font-size="12" fill="#8a8078">西南</text>
+      </g>
+      <path d="M 200 100 L 200 46" stroke="#d05353" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 200 38 L 194 52 L 206 52 Z" fill="#d05353"/>
+    </svg>
+
+    <p class="conclusion">说方向时，先看<b>东南西北</b>；走路线时，一次只说一个方向。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>走到宝藏那儿</h2>
+    <p class="lead">用方向键走，绕过树，拿到 💎。</p>
+
+    <svg id="map" viewBox="0 0 400 300" role="img" aria-label="寻宝地图">
+      <g id="cells"></g>
+      <g id="marks"></g>
+    </svg>
+
+    <div class="pad">
+      <button class="sp" tabindex="-1"></button>
+      <button data-d="N" type="button" aria-label="向北">↑</button>
+      <button class="sp" tabindex="-1"></button>
+      <button data-d="W" type="button" aria-label="向西">←</button>
+      <div class="mid">方向</div>
+      <button data-d="E" type="button" aria-label="向东">→</button>
+      <button class="sp" tabindex="-1"></button>
+      <button data-d="S" type="button" aria-label="向南">↓</button>
+      <button class="sp" tabindex="-1"></button>
+    </div>
+
+    <div class="chips" id="chips"></div>
+    <p class="status" id="status">还没出发。目标在东北方向。</p>
+
+    <div style="text-align:center;margin-top:12px">
+      <button class="btn ghost" id="reset" type="button">回到起点</button>
+    </div>
+
+    <p class="hint">键盘方向键也能走。走错了没关系，回到起点再来。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>数一数，走了几格</h2>
+    <p class="lead">路线不光能用话说，还能用数算。</p>
+    <ul class="fact">
+      <li>向东走 3 格，就是横着走 <b>3</b> 格</li>
+      <li>向北走 2 格，就是竖着走 <b>2</b> 格</li>
+      <li>一共走的格数，把两个方向的格数 <b>加起来</b></li>
+    </ul>
+    <p class="conclusion">从起点到宝藏，横着差 <b>6</b> 格、竖着差 <b>4</b> 格，所以最少要走 <b>10</b> 格。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第五单元-长方形和正方形/index.html">← 第五单元 · 长方形和正方形</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第六单元-分数的初步认识/index.html">第六单元 · 分数的初步认识 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var COLS = 8, ROWS = 6, CELL = 42, OX = 40, OY = 16;
+  var START = { c:0, r:5 };
+  var TREASURE = { c:6, r:1 };
+  var TREES = [ {c:3,r:3}, {c:5,r:4}, {c:2,r:1} ];
+
+  var pos = { c: START.c, r: START.r };
+  var steps = 0;
+  var tally = { E:0, W:0, N:0, S:0 };
+  var won = false;
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var cellsG = document.getElementById('cells');
+  var marksG = document.getElementById('marks');
+  var chips = document.getElementById('chips');
+  var statusEl = document.getElementById('status');
+
+  function cx(c){ return OX + c * CELL + CELL / 2; }
+  function cy(r){ return OY + r * CELL + CELL / 2; }
+
+  function drawBoard(){
+    var s = '';
+    for (var r = 0; r < ROWS; r++){
+      for (var c = 0; c < COLS; c++){
+        s += '<rect x="' + (OX + c * CELL) + '" y="' + (OY + r * CELL) + '" width="' + CELL +
+             '" height="' + CELL + '" fill="' + ((r + c) % 2 ? '#fffaf3' : '#fdf6ee') +
+             '" stroke="#efe3d4" stroke-width="1"/>';
+      }
+    }
+    cellsG.innerHTML = s;
+  }
+
+  function drawMarks(){
+    marksG.innerHTML = '';
+
+    function emoji(x, y, ch, size){
+      var t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', x); t.setAttribute('y', y);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('dominant-baseline', 'central');
+      t.setAttribute('font-size', size || 26);
+      t.textContent = ch;
+      return t;
+    }
+
+    TREES.forEach(function(t){
+      marksG.appendChild(emoji(cx(t.c), cy(t.r), '🌳', 26));
+    });
+
+    if (!won){
+      marksG.appendChild(emoji(cx(TREASURE.c), cy(TREASURE.r), '💎', 26));
+    }
+
+    marksG.appendChild(emoji(cx(pos.c), cy(pos.r), won ? '🎉' : '🧍', 26));
+  }
+
+  function renderChips(){
+    var names = { E:'东', W:'西', N:'北', S:'南' };
+    var parts = [];
+    ['E','W','N','S'].forEach(function(d){
+      if (tally[d] > 0) parts.push('<span class="chip">向' + names[d] + ' <b>' + tally[d] + '</b> 格</span>');
+    });
+    chips.innerHTML = parts.length ? parts.join('') : '<span class="chip">还没走</span>';
+  }
+
+  function blocked(c, r){
+    return TREES.some(function(t){ return t.c === c && t.r === r; });
+  }
+
+  function move(d){
+    if (won) return;
+    var nc = pos.c, nr = pos.r;
+    if (d === 'E') nc++;
+    if (d === 'W') nc--;
+    if (d === 'N') nr--;
+    if (d === 'S') nr++;
+
+    if (nc < 0 || nc >= COLS || nr < 0 || nr >= ROWS){
+      statusEl.textContent = '那边是地图外面了，换个方向。';
+      return;
+    }
+    if (blocked(nc, nr)){
+      statusEl.textContent = '前面有棵树 🌳，绕一下。';
+      return;
+    }
+
+    pos.c = nc; pos.r = nr;
+    steps++;
+    tally[d]++;
+
+    if (pos.c === TREASURE.c && pos.r === TREASURE.r){
+      won = true;
+      statusEl.className = 'status win';
+      statusEl.textContent = '🎉 找到宝藏！走了 ' + steps + ' 步（最少 10 步）。';
+    } else {
+      statusEl.className = 'status';
+      var dc = TREASURE.c - pos.c, dr = TREASURE.r - pos.r;
+      var hint = [];
+      if (dc > 0) hint.push('东'); else if (dc < 0) hint.push('西');
+      if (dr < 0) hint.push('北'); else if (dr > 0) hint.push('南');
+      statusEl.textContent = '走了 ' + steps + ' 步，宝藏还在你' +
+        (hint.length ? hint.join('') + '边。' : '脚下。');
+    }
+
+    renderChips();
+    drawMarks();
+  }
+
+  function reset(){
+    pos.c = START.c; pos.r = START.r;
+    steps = 0; tally = { E:0, W:0, N:0, S:0 };
+    won = false;
+    statusEl.className = 'status';
+    statusEl.textContent = '还没出发。目标在东北方向。';
+    renderChips();
+    drawMarks();
+  }
+
+  drawBoard();
+  drawMarks();
+  renderChips();
+
+  Array.prototype.forEach.call(document.querySelectorAll('.pad button[data-d]'), function(b){
+    b.addEventListener('click', function(){ move(b.getAttribute('data-d')); });
+  });
+  document.getElementById('reset').addEventListener('click', reset);
+
+  document.addEventListener('keydown', function(e){
+    var map = { ArrowUp:'N', ArrowDown:'S', ArrowLeft:'W', ArrowRight:'E' };
+    var d = map[e.key];
+    if (!d) return;
+    if (e.target && e.target.tagName === 'INPUT') return;
+    e.preventDefault();
+    move(d);
+  });
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'地图上通常哪一边是北？', opts:['上边','下边','右边'], a:0,
+      why:'地图约定上北下南、左西右东。' },
+    { q:'小明向东走 3 格，再向东走 2 格，一共向东走了几格？',
+      opts:['5 格','6 格','1 格'], a:0,
+      why:'方向相同就加起来：3 ＋ 2 ＝ 5（格）。' },
+    { q:'从 (0,0) 向东走 4 格、向北走 3 格，到哪儿？',
+      opts:['(4,3)','(3,4)','(7,0)'], a:0,
+      why:'向东加横坐标、向北加纵坐标，所以到第 4 列第 3 行。' },
+    { q:'横着差 5 格、竖着差 2 格，最少要走几格？',
+      opts:['3 格','7 格','10 格'], a:1,
+      why:'把这个方向加起来：5 ＋ 2 ＝ 7（格）。' },
+    { q:'要绕过挡路的树，走法（　）。',
+      opts:['只有一种','可能不止一种','一定走不到'], a:1,
+      why:'绕路的方法常常不止一种，但最少步数往往是一样的。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>苏教版三年级下册 · 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 10px}
+  h1{font-size:32px;margin:0 0 6px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 8px}
+  .done{display:inline-block;background:#e7f4ec;color:#276c4a;border-radius:999px;font-size:13px;font-weight:700;padding:3px 14px;margin:0 0 28px}
+
+  .list{display:flex;flex-direction:column;gap:10px}
+  .row{
+    display:flex;gap:14px;align-items:center;text-decoration:none;color:var(--ink);
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:14px 18px;transition:.16s;box-shadow:0 1px 2px rgba(90,66,40,.04);
+  }
+  .row:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 6px 16px rgba(190,130,60,.12);text-decoration:none}
+  .row .no{
+    flex:none;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:800;background:var(--accent-soft);color:var(--accent);
+  }
+  .row:nth-child(even) .no{background:var(--blue-soft);color:#3f6fc4}
+  .row .t{font-size:16px;font-weight:700;margin:0}
+  .row .d{font-size:13px;color:var(--muted);margin:0}
+
+  .row.act{
+    margin-left:26px;background:#fffdf9;border-style:dashed;padding:11px 18px;
+  }
+  .row.act .no{background:#f4ece2;color:#8a8078;font-size:15px;width:28px;height:28px}
+  .row.act .t{font-size:14.5px;font-weight:600;color:#5d534a}
+  .row.act .d{font-size:12px}
+
+  .note{margin:32px 0 0;padding:14px 18px;border-radius:14px;background:#fdf6ee;font-size:14px;color:#6b6258}
+  .note b{color:var(--ink)}
+  .note a{color:var(--accent)}
+
+  @media(max-width:520px){
+    h1{font-size:26px}
+    .row.act{margin-left:12px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../index.html">小学数学</a> ／ 三年级下册（苏教版）</p>
+  <h1>🐼 苏教版 · 三年级下册</h1>
+  <p class="sub">6 个单元 + 4 个 ☆ 综合实践</p>
+  <p class="done">✓ 全部完成</p>
+
+  <div class="list">
+
+    <a class="row" href="第一单元-角/index.html">
+      <span class="no">一</span>
+      <span><span class="t">角</span><br><span class="d">拖一拖，看角张开多大，直角会吸住</span></span>
+    </a>
+
+    <a class="row" href="第二单元-加法数量关系/index.html">
+      <span class="no">二</span>
+      <span><span class="t">加法数量关系</span><br><span class="d">线段图分一分，部分加部分就是总数</span></span>
+    </a>
+
+    <a class="row act" href="综合实践-年月日的秘密/index.html">
+      <span class="no">☆</span>
+      <span><span class="t">年、月、日的秘密</span><br><span class="d">翻年份看闰年二月，时间轴对上 24 时</span></span>
+    </a>
+
+    <a class="row" href="第三单元-两位数乘两位数/index.html">
+      <span class="no">三</span>
+      <span><span class="t">两位数乘两位数</span><br><span class="d">面积图拆成四块，竖式一步一步写</span></span>
+    </a>
+
+    <a class="row act" href="综合实践-简单的周期/index.html">
+      <span class="no">☆</span>
+      <span><span class="t">简单的周期</span><br><span class="d">拖到第 n 个，用除法的余数找答案</span></span>
+    </a>
+
+    <a class="row" href="第四单元-统计表和条形统计图/index.html">
+      <span class="no">四</span>
+      <span><span class="t">统计表和条形统计图（一）</span><br><span class="d">改数据，条形图和结论一起变</span></span>
+    </a>
+
+    <a class="row act" href="综合实践-垃圾分类/index.html">
+      <span class="no">☆</span>
+      <span><span class="t">垃圾分类中的数学问题</span><br><span class="d">把垃圾投进对的桶，再算一年攒多少</span></span>
+    </a>
+
+    <a class="row" href="第五单元-长方形和正方形/index.html">
+      <span class="no">五</span>
+      <span><span class="t">长方形和正方形</span><br><span class="d">周长绕一圈，面积铺满，两者别混</span></span>
+    </a>
+
+    <a class="row act" href="综合实践-寻找宝藏/index.html">
+      <span class="no">☆</span>
+      <span><span class="t">寻找"宝藏"</span><br><span class="d">走格子拿宝藏，数一数一共走了几格</span></span>
+    </a>
+
+    <a class="row" href="第六单元-分数的初步认识/index.html">
+      <span class="no">六</span>
+      <span><span class="t">分数的初步认识</span><br><span class="d">点巧克力凑分数，份数越多一份越小</span></span>
+    </a>
+
+  </div>
+
+  <p class="note">
+    同一个学期还有 <a href="../三年级下册-人教版/index.html">人教版（下册，8 个单元）</a>、
+    <a href="../三年级上册/index.html">苏教版（上册，8 个单元）</a>、
+    <a href="../三年级上册-人教版/index.html">人教版（上册，10 个单元）</a>。
+  </p>
+
+</div>
+</body>
+</html>

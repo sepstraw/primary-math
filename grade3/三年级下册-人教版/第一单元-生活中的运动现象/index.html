@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第六单元 · 平移、旋转和轴对称 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0}
+  .kind{background:#fdf6ee;border-radius:12px;padding:12px;font-size:13px;color:#5d534a}
+  .kind b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+
+  .pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(3,50px);gap:6px;justify-content:center;margin:14px auto 0}
+  .pad button{font:inherit;font-size:19px;cursor:pointer;border-radius:12px;border:1.5px solid #e9dbc9;background:#fff;color:var(--ink);transition:.12s}
+  .pad button:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .pad button:active{transform:scale(.95)}
+  .pad .sp{visibility:hidden}
+  .pad .mid{font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;border:0;background:transparent;cursor:default}
+  .pad .mid:hover{background:transparent}
+
+  .readout{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 0;font-size:14px}
+  .readout span{background:#fdf6ee;border-radius:10px;padding:4px 14px;font-variant-numeric:tabular-nums}
+  .readout b{color:var(--accent)}
+
+  .btn{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:8px 20px;background:var(--accent);border:0;color:#fff;font-weight:600}
+  .btn:hover{background:#d5781f}
+  .btn.ghost{background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .center{text-align:center;margin:14px 0 0}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:640px){ .kinds{grid-template-columns:1fr} }
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级下册</a> ／ 第一单元</p>
+  <h1>第一单元 · 生活中的运动现象</h1>
+  <p class="sub">🔄 图形会走、会转、还会照镜子</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>三种变化，各是什么</h2>
+    <div class="kinds">
+      <div class="kind"><b>平移</b>沿直线移动，方向不变，样子也不变</div>
+      <div class="kind"><b>旋转</b>绕一个点转动，转多少度就变多少</div>
+      <div class="kind"><b>轴对称</b>对折后两边完全重合，折痕就是对称轴</div>
+    </div>
+    <p class="conclusion">三种变化都<b>不改变图形的形状和大小</b>，变的只是位置或方向。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>平移：走几格</h2>
+    <p class="lead">用方向键让房子在格子里移动，数一数走了几格。</p>
+
+    <svg id="grid" viewBox="0 0 420 300" role="img" aria-label="网格上平移的图形">
+      <g id="cells"></g>
+      <text id="house" text-anchor="middle" dominant-baseline="central" font-size="30">🏠</text>
+    </svg>
+
+    <div class="pad">
+      <button class="sp" tabindex="-1"></button>
+      <button data-d="N" type="button" aria-label="上">↑</button>
+      <button class="sp" tabindex="-1"></button>
+      <button data-d="W" type="button" aria-label="左">←</button>
+      <div class="mid">平移</div>
+      <button data-d="E" type="button" aria-label="右">→</button>
+      <button class="sp" tabindex="-1"></button>
+      <button data-d="S" type="button" aria-label="下">↓</button>
+      <button class="sp" tabindex="-1"></button>
+    </div>
+
+    <div class="readout">
+      <span>向右 <b id="dx">0</b> 格</span>
+      <span>向上 <b id="dy">0</b> 格</span>
+    </div>
+
+    <div class="center">
+      <button class="btn ghost" id="reset" type="button">回到原处</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>旋转：转了几度</h2>
+    <p class="lead">每点一次转 90°。</p>
+
+    <svg id="wheel" viewBox="0 0 420 260" role="img" aria-label="可以旋转的风车">
+      <circle cx="210" cy="130" r="86" fill="none" stroke="#f0e4d4" stroke-width="2" stroke-dasharray="5 5"/>
+      <g id="blades">
+        <path d="M 210 130 L 210 52 A 78 78 0 0 1 288 130 Z" fill="#fdd9b0" stroke="#e8862e" stroke-width="2"/>
+        <path d="M 210 130 L 288 130 A 78 78 0 0 1 210 208 Z" fill="#dbe7fa" stroke="#4a7fd4" stroke-width="2"/>
+        <path d="M 210 130 L 210 208 A 78 78 0 0 1 132 130 Z" fill="#d5f0e0" stroke="#2f9e68" stroke-width="2"/>
+        <path d="M 210 130 L 132 130 A 78 78 0 0 1 210 52 Z" fill="#fbdcdc" stroke="#d05353" stroke-width="2"/>
+        <circle cx="210" cy="130" r="7" fill="#3b3631"/>
+      </g>
+    </svg>
+
+    <div class="center">
+      <button class="btn" id="turn" type="button">转 90°</button>
+      <button class="btn ghost" id="turnReset" type="button">回到原位</button>
+    </div>
+    <p class="readout" style="justify-content:center"><span>已经转了 <b id="deg">0</b>°</span></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>轴对称：对折试试</h2>
+    <p class="lead">中间的虚线是对称轴，点一下把它折过去。</p>
+
+    <svg id="sym" viewBox="0 0 420 260" role="img" aria-label="轴对称图形对折">
+      <line x1="210" y1="24" x2="210" y2="236" stroke="#c9bcae" stroke-width="2" stroke-dasharray="7 6"/>
+      <g id="rightHalf">
+        <path d="M 210 44 C 272 66, 300 120, 258 156 C 236 176, 216 190, 210 200 Z"
+              fill="#cfe3fb" stroke="#4a7fd4" stroke-width="2.5"/>
+      </g>
+      <g id="leftHalf">
+        <path d="M 210 44 C 148 66, 120 120, 162 156 C 184 176, 204 190, 210 200 Z"
+              fill="#fdf1e4" stroke="#e8862e" stroke-width="2.5"/>
+      </g>
+      <text x="214" y="18" font-size="12" fill="#a2968a">对称轴</text>
+    </svg>
+
+    <p class="readout" style="justify-content:center" id="symState"><span>现在两边一样大，能完全重合</span></p>
+
+    <div class="center">
+      <button class="btn" id="fold" type="button">对折</button>
+    </div>
+
+    <p class="hint">折过去以后，蓝色那一半正好盖在橙色那一半上——这就叫轴对称。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">5</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第二单元-除数是一位数的除法/index.html">第二单元 · 除数是一位数的除法 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* ========== 平移 ========== */
+  var COLS = 8, ROWS = 6, CELL = 40, OX = 50, OY = 40;
+  var pos = { c: 1, r: 4 };
+  var dx = 0, dy = 0;
+
+  var g = document.getElementById('cells');
+  var house = document.getElementById('house');
+  var dxEl = document.getElementById('dx');
+  var dyEl = document.getElementById('dy');
+
+  (function drawGrid(){
+    var s = '';
+    for (var r = 0; r < ROWS; r++){
+      for (var c = 0; c < COLS; c++){
+        s += '<rect x="' + (OX + c * CELL) + '" y="' + (OY + r * CELL) + '" width="' + CELL +
+             '" height="' + CELL + '" fill="' + ((r + c) % 2 ? '#fffaf3' : '#fdf6ee') +
+             '" stroke="#efe3d4" stroke-width="1"/>';
+      }
+    }
+    g.innerHTML = s;
+  })();
+
+  function drawHouse(){
+    house.setAttribute('x', OX + pos.c * CELL + CELL / 2);
+    house.setAttribute('y', OY + pos.r * CELL + CELL / 2);
+    dxEl.textContent = dx;
+    dyEl.textContent = -dy;
+  }
+
+  function move(d){
+    var c = pos.c, r = pos.r;
+    if (d === 'E') c++;
+    if (d === 'W') c--;
+    if (d === 'N') r--;
+    if (d === 'S') r++;
+    if (c < 0 || c >= COLS || r < 0 || r >= ROWS) return;
+    pos.c = c; pos.r = r;
+    if (d === 'E') dx++;
+    if (d === 'W') dx--;
+    if (d === 'N') dy--;
+    if (d === 'S') dy++;
+    drawHouse();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.pad button[data-d]'), function(b){
+    b.addEventListener('click', function(){ move(b.getAttribute('data-d')); });
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    pos = { c: 1, r: 4 }; dx = 0; dy = 0; drawHouse();
+  });
+  document.addEventListener('keydown', function(e){
+    var map = { ArrowUp:'N', ArrowDown:'S', ArrowLeft:'W', ArrowRight:'E' };
+    if (map[e.key]){ e.preventDefault(); move(map[e.key]); }
+  });
+  drawHouse();
+
+  /* ========== 旋转 ========== */
+  var blades = document.getElementById('blades');
+  var degEl = document.getElementById('deg');
+  var angle = 0;
+
+  function renderWheel(){
+    blades.setAttribute('transform', 'rotate(' + angle + ' 210 130)');
+    degEl.textContent = angle;
+  }
+  document.getElementById('turn').addEventListener('click', function(){
+    angle = (angle + 90) % 360;
+    renderWheel();
+  });
+  document.getElementById('turnReset').addEventListener('click', function(){
+    angle = 0; renderWheel();
+  });
+  renderWheel();
+
+  /* ========== 轴对称 ========== */
+  var rightHalf = document.getElementById('rightHalf');
+  var foldBtn = document.getElementById('fold');
+  var folded = false;
+
+  foldBtn.addEventListener('click', function(){
+    folded = !folded;
+    // 关于 x=210 镜像：x' = 420 - x
+    rightHalf.setAttribute('transform', folded ? 'translate(420,0) scale(-1,1)' : '');
+    foldBtn.textContent = folded ? '展开' : '对折';
+  });
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'小明把一张纸上的三角形向右平移 3 格，三角形的形状（　）。',
+      opts:['变大了','不变','变小了'], a:1,
+      why:'平移只改变位置，形状和大小都不变。' },
+    { q:'钟面上时针从 3 走到 6，转过了多少度？',
+      opts:['30°','90°','180°'], a:1,
+      why:'钟面一大格是 30°，3 到 6 是 3 大格：30 × 3 ＝ 90°。' },
+    { q:'把一个图形对折后两边完全重合，这个图形是（　）。',
+      opts:['轴对称图形','平移图形','旋转图形'], a:0,
+      why:'能沿一条直线对折重合的，就是轴对称图形，这条线叫对称轴。' },
+    { q:'下面的字，哪个是轴对称的？',
+      opts:['中','上','了'], a:0,
+      why:'「中」左右对称；「上」「了」对折后两边对不上。' },
+    { q:'风车绕中心转了 4 次，每次 90°，最后和原来相比（　）。',
+      opts:['完全一样','转了 90°','不一样'], a:0,
+      why:'90 × 4 ＝ 360°，转满一圈就回到原样。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

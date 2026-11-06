@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第二单元 · 千克和克 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .weights{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 0}
+  .weights button{
+    font:inherit;font-size:14px;cursor:pointer;border-radius:12px;padding:8px 16px;
+    background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);transition:.15s;
+  }
+  .weights button:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+  .readout{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0 0;font-size:15px}
+  .readout span{background:#fdf6ee;border-radius:10px;padding:5px 14px;font-variant-numeric:tabular-nums}
+  .readout b{color:var(--accent)}
+
+  .state{text-align:center;font-size:16px;font-weight:700;margin:10px 0 0;min-height:26px;color:var(--muted)}
+  .state.bal{color:var(--green)}
+
+  table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums;margin:4px 0 0}
+  th,td{border:1px solid #e8dbc9;padding:8px 10px;text-align:center}
+  thead th{background:#fdf6ee}
+  .hl{color:var(--accent);font-weight:700}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级上册</a> ／ 第四单元</p>
+  <h1>第四单元 · 曹冲称象</h1>
+  <p class="sub">⚖️ 轻的用克，重的用千克</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>两个质量单位</h2>
+    <p class="lead">称比较轻的东西用克，称比较重的东西用千克。</p>
+    <ul class="fact">
+      <li>一枚硬币大约 <b>6 克</b></li>
+      <li>一个苹果大约 <b>200 克</b></li>
+      <li>一袋大米 <b>25 千克</b></li>
+    </ul>
+    <p class="conclusion"><b>1 千克 ＝ 1000 克</b>。这是这一单元唯一必须背下来的式子。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>把天平调平</h2>
+    <p class="lead">左边是一袋 450 克的米，右边用 100 克和 50 克的砝码。</p>
+
+    <svg id="scale" viewBox="0 0 420 300" role="img" aria-label="可以加减砝码的天平">
+      <line id="beam" stroke="#8a8078" stroke-width="6" stroke-linecap="round"></line>
+      <circle cx="210" cy="120" r="7" fill="#5d534a"/>
+      <polygon points="210,120 178,258 242,258" fill="#efe3d4" stroke="#d9c4a8" stroke-width="2"/>
+      <line x1="160" y1="258" x2="260" y2="258" stroke="#d9c4a8" stroke-width="6" stroke-linecap="round"/>
+
+      <line id="strL" stroke="#c9bcae" stroke-width="1.6"></line>
+      <line id="strR" stroke="#c9bcae" stroke-width="1.6"></line>
+      <ellipse id="panL" fill="#fdf1e4" stroke="#e8862e" stroke-width="2.5"></ellipse>
+      <ellipse id="panR" fill="#e8effb" stroke="#4a7fd4" stroke-width="2.5"></ellipse>
+
+      <text id="itemL" text-anchor="middle" font-size="26">🍚</text>
+      <text id="txtL" text-anchor="middle" font-size="13" font-weight="700" fill="#c9761f"></text>
+      <text id="txtR" text-anchor="middle" font-size="13" font-weight="700" fill="#3f6fc4"></text>
+    </svg>
+
+    <div class="weights">
+      <button data-d="100" type="button">＋100 克</button>
+      <button data-d="-100" type="button">−100 克</button>
+      <button data-d="50" type="button">＋50 克</button>
+      <button data-d="-50" type="button">−50 克</button>
+    </div>
+
+    <div class="readout">
+      <span>左边 <b>450</b> 克</span>
+      <span>右边 <b id="rw">0</b> 克</span>
+    </div>
+
+    <p class="state" id="state"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>千克和克之间怎么换</h2>
+    <p class="lead">1 千克 ＝ 1000 克，所以——</p>
+
+    <table>
+      <thead><tr><th>用千克说</th><th>换成克</th><th>为什么</th></tr></thead>
+      <tbody>
+        <tr><td>2 千克</td><td class="hl">2000 克</td><td>2 × 1000</td></tr>
+        <tr><td>2 千克 300 克</td><td class="hl">2300 克</td><td>2000 ＋ 300</td></tr>
+        <tr><td>3 千克 50 克</td><td class="hl">3050 克</td><td>3000 ＋ 50</td></tr>
+        <tr><td>3500 克</td><td class="hl">3 千克 500 克</td><td>3500 ＝ 3000 ＋ 500</td></tr>
+      </tbody>
+    </table>
+
+    <p class="conclusion">千克<b>换</b>克：× 1000；克<b>换</b>千克：去掉三个 0 看有几千克，剩下的就是零几克。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第三单元-毫米分米和千米/index.html">← 第三单元 · 毫米、分米和千米</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第五单元-多位数乘一位数/index.html">第五单元 · 多位数乘一位数 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var LEFT = 450;       // 左边那袋米
+  var right = 0;        // 右边砝码总重
+
+  var beam = document.getElementById('beam');
+  var strL = document.getElementById('strL');
+  var strR = document.getElementById('strR');
+  var panL = document.getElementById('panL');
+  var panR = document.getElementById('panR');
+  var itemL = document.getElementById('itemL');
+  var txtL = document.getElementById('txtL');
+  var txtR = document.getElementById('txtR');
+  var rw = document.getElementById('rw');
+  var state = document.getElementById('state');
+
+  var PIVX = 210, PIVY = 120;
+  var ARM = 90;            // 力臂半长
+
+  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+  function render(){
+    var diff = LEFT - right;
+    var tilt = clamp(diff / 12, -26, 26);
+
+    var lx = PIVX - ARM, ly = PIVY + tilt;
+    var rx = PIVX + ARM, ry = PIVY - tilt;
+
+    beam.setAttribute('x1', lx); beam.setAttribute('y1', ly);
+    beam.setAttribute('x2', rx); beam.setAttribute('y2', ry);
+
+    var pLy = ly + 72, pRy = ry + 72;
+
+    strL.setAttribute('x1', lx); strL.setAttribute('y1', ly);
+    strL.setAttribute('x2', lx); strL.setAttribute('y2', pLy);
+    strR.setAttribute('x1', rx); strR.setAttribute('y1', ry);
+    strR.setAttribute('x2', rx); strR.setAttribute('y2', pRy);
+
+    panL.setAttribute('cx', lx); panL.setAttribute('cy', pLy);
+    panL.setAttribute('rx', 46); panL.setAttribute('ry', 9);
+    panR.setAttribute('cx', rx); panR.setAttribute('cy', pRy);
+    panR.setAttribute('rx', 46); panR.setAttribute('ry', 9);
+
+    itemL.setAttribute('x', lx);
+    itemL.setAttribute('y', pLy - 12);
+
+    txtL.setAttribute('x', lx);
+    txtL.setAttribute('y', pLy + 26);
+    txtL.textContent = '450 克';
+
+    txtR.setAttribute('x', rx);
+    txtR.setAttribute('y', pRy + 26);
+    txtR.textContent = right + ' 克';
+
+    rw.textContent = right;
+
+    if (diff === 0){
+      state.className = 'state bal';
+      state.textContent = '🎉 平衡了！450 ＝ ' + right + '，正好一样重。';
+    } else if (diff > 0){
+      state.className = 'state';
+      state.textContent = '左边重，右边还差 ' + diff + ' 克。';
+    } else {
+      state.className = 'state';
+      state.textContent = '右边重了，多出 ' + (-diff) + ' 克。';
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.weights button'), function(b){
+    b.addEventListener('click', function(){
+      var d = parseInt(b.getAttribute('data-d'), 10);
+      var nv = right + d;
+      if (nv < 0 || nv > 800) return;
+      right = nv;
+      render();
+    });
+  });
+
+  render();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'1 千克等于多少克？', opts:['10 克','100 克','1000 克'], a:2,
+      why:'1 千克 ＝ 1000 克，这是换算的根本。' },
+    { q:'一袋盐重 500 克，两袋一共多少克？', opts:['100 克','1000 克','1500 克'], a:1,
+      why:'500 ＋ 500 ＝ 1000（克），也就是 1 千克。' },
+    { q:'3 千克等于多少克？', opts:['30 克','300 克','3000 克'], a:2,
+      why:'千克换克乘 1000：3 × 1000 ＝ 3000（克）。' },
+    { q:'2500 克是多少千克多少克？', opts:['2 千克 500 克','25 千克','250 千克'], a:0,
+      why:'2500 克 ＝ 2000 克 ＋ 500 克 ＝ 2 千克 500 克。' },
+    { q:'一个苹果大约重多少？', opts:['200 克','200 千克','2 克'], a:0,
+      why:'苹果不重，用克合适；200 千克比人还重，显然不对。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var cnt = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ cnt++; scoreEl.innerHTML = '已经答对 <b>' + cnt + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

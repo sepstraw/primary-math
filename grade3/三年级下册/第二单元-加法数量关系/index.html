@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第二单元 · 加法数量关系 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3;
+    --card:#ffffff;
+    --ink:#2f2b28;
+    --muted:#8a8078;
+    --line:#efe3d4;
+    --accent:#e8862e;
+    --accent-soft:#fdf1e4;
+    --green:#2f9e68;
+    --red:#d05353;
+    --blue:#4a7fd4;
+    --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04);
+  }
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:24px;height:24px;border-radius:8px;
+    background:var(--accent-soft);color:var(--accent);
+    font-size:13px;font-weight:700;flex:none;
+  }
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+
+  svg{display:block;width:100%;height:auto;border-radius:14px;touch-action:none;outline:none;
+      background:linear-gradient(#fffdfa,#fff6ea)}
+  svg:focus-visible{box-shadow:0 0 0 3px #f6d3ab}
+
+  /* 标签页 */
+  .tabs{display:flex;gap:8px;margin:0 0 14px}
+  .tabs button{
+    font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:6px 16px;
+    background:#fff;border:1.5px solid #e9dbc9;color:var(--muted);transition:.15s;
+  }
+  .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:#b96a1c;font-weight:700}
+
+  .eq{
+    margin:16px 0 0;text-align:center;font-size:28px;font-weight:700;
+    letter-spacing:2px;font-variant-numeric:tabular-nums;
+  }
+  .eq .u{color:var(--accent)}
+  .eq .q{color:#b8ada2}
+  .eq b{color:var(--blue)}
+
+  .ctrl{display:flex;align-items:center;gap:12px;margin:14px 0 0;flex-wrap:wrap}
+  .btn{
+    font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:7px 18px;
+    background:var(--accent);border:0;color:#fff;font-weight:600;
+  }
+  .btn:hover{background:#d5781f}
+  .btn.ghost{background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);font-weight:400}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+  .hint kbd{font:inherit;font-size:12px;background:#f4ece2;border:1px solid #e8dbc9;border-radius:5px;padding:1px 6px}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+
+  /* 练习 */
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{
+    font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;
+    color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s;
+  }
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){
+    h1{font-size:25px}
+    .card{padding:18px}
+    .eq{font-size:23px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级下册</a> ／ 第二单元</p>
+  <h1>第二单元 · 加法数量关系</h1>
+  <p class="sub">🧮 两个部分合起来，就是总数</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>先看一张图</h2>
+    <p class="lead">一段路分两段走完，两段加起来就是全程。</p>
+
+    <svg viewBox="0 0 400 150" aria-label="总数分成两个部分的关系图">
+      <rect x="24" y="18" width="352" height="44" rx="10" fill="#fdf1e4" stroke="#e8862e" stroke-width="1.5"/>
+      <text x="200" y="46" text-anchor="middle" font-size="16" font-weight="700" fill="#b96a1c">总数</text>
+      <rect x="24" y="86" width="152" height="44" rx="10" fill="#e8effb" stroke="#4a7fd4" stroke-width="1.5"/>
+      <text x="100" y="114" text-anchor="middle" font-size="15" fill="#3f6fc4">部分</text>
+      <rect x="196" y="86" width="180" height="44" rx="10" fill="#e7f4ec" stroke="#2f9e68" stroke-width="1.5"/>
+      <text x="286" y="114" text-anchor="middle" font-size="15" fill="#276c4a">部分</text>
+      <path d="M100 62 L100 86 M286 62 L286 86" stroke="#c9bcae" stroke-width="1.5" stroke-dasharray="4 4"/>
+    </svg>
+
+    <p class="conclusion">部分 ＋ 部分 ＝ <b>总数</b>　　·　　总数 － 一部分 ＝ <b>另一部分</b></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>拖动看看</h2>
+    <p class="lead">整条线段代表 12，把它分成两段。</p>
+
+    <div class="tabs">
+      <button id="tab1" type="button" class="on">① 合起来</button>
+      <button id="tab2" type="button">② 求一段</button>
+    </div>
+
+    <svg id="lab" viewBox="0 0 420 210" tabindex="0" role="img" aria-label="可以拖动的线段图">
+      <rect id="rectL" y="84" height="36" rx="8" fill="#e8862e" opacity=".9"/>
+      <rect id="rectR" y="84" height="36" rx="8" fill="#4a7fd4" opacity=".85"/>
+      <text id="txtL" y="107" text-anchor="middle" font-size="17" font-weight="700" fill="#fff"></text>
+      <text id="txtR" y="107" text-anchor="middle" font-size="17" font-weight="700" fill="#fff"></text>
+
+      <rect id="cover" y="84" height="36" rx="8" fill="#efe6da" stroke="#d9cbb9" stroke-width="1.5" stroke-dasharray="6 4"></rect>
+      <text id="qmark" y="109" text-anchor="middle" font-size="20" font-weight="700" fill="#b3a597">?</text>
+
+      <line id="divider" y1="74" y2="132" stroke="#3b3631" stroke-width="3" stroke-linecap="round"></line>
+      <circle id="knob" cy="70" r="10" fill="#fff" stroke="#3b3631" stroke-width="3"></circle>
+
+      <line x1="40" y1="156" x2="380" y2="156" stroke="#c9bcae" stroke-width="1.5"></line>
+      <line x1="40" y1="150" x2="40" y2="162" stroke="#c9bcae" stroke-width="1.5"></line>
+      <line x1="380" y1="150" x2="380" y2="162" stroke="#c9bcae" stroke-width="1.5"></line>
+      <text x="210" y="182" text-anchor="middle" font-size="15" fill="#8a8078">总数 12</text>
+    </svg>
+
+    <p class="eq" id="eq"></p>
+
+    <div class="ctrl">
+      <button class="btn ghost" id="reveal" type="button" style="display:none">揭晓答案</button>
+      <span class="hint" style="margin:0">按住白点拖动，或者直接点线段</span>
+    </div>
+
+    <p class="hint">键盘：<kbd>←</kbd> <kbd>→</kbd> 一段一段挪。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>练一练</h2>
+    <p class="lead">算一算，或者想清楚谁是总数、谁是部分。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第一单元-角/index.html">← 第一单元 · 角</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../综合实践-年月日的秘密/index.html">☆ 年、月、日的秘密 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var T = 12;                 // 总数
+  var X0 = 40, X1 = 380;      // 线段起点、终点
+  var UNIT = (X1 - X0) / T;   // 每个单位的像素宽
+  var a = 7;                  // 左边一段
+  var mode = 1;               // 1 合起来 / 2 求一段
+  var revealed = false;
+
+  var svg = document.getElementById('lab');
+  var rectL = document.getElementById('rectL');
+  var rectR = document.getElementById('rectR');
+  var txtL  = document.getElementById('txtL');
+  var txtR  = document.getElementById('txtR');
+  var cover = document.getElementById('cover');
+  var qmark = document.getElementById('qmark');
+  var divider = document.getElementById('divider');
+  var knob = document.getElementById('knob');
+  var eq = document.getElementById('eq');
+  var revealBtn = document.getElementById('reveal');
+  var tab1 = document.getElementById('tab1');
+  var tab2 = document.getElementById('tab2');
+
+  function render(){
+    var b = T - a;
+    var wL = a * UNIT;
+    var xSplit = X0 + wL;
+
+    rectL.setAttribute('x', X0);
+    rectL.setAttribute('width', wL);
+    rectR.setAttribute('x', xSplit);
+    rectR.setAttribute('width', X1 - xSplit);
+
+    txtL.setAttribute('x', X0 + wL / 2);
+    txtL.textContent = a;
+    txtR.setAttribute('x', xSplit + (X1 - xSplit) / 2);
+    txtR.textContent = b;
+
+    divider.setAttribute('x1', xSplit);
+    divider.setAttribute('x2', xSplit);
+    knob.setAttribute('cx', xSplit);
+
+    if (mode === 2){
+      cover.setAttribute('x', xSplit);
+      cover.setAttribute('width', X1 - xSplit);
+      cover.style.display = '';
+      qmark.setAttribute('x', xSplit + (X1 - xSplit) / 2);
+      qmark.style.display = revealed ? 'none' : '';
+      txtR.style.display = revealed ? '' : 'none';
+      revealBtn.style.display = revealed ? 'none' : '';
+    } else {
+      cover.style.display = 'none';
+      qmark.style.display = 'none';
+      txtR.style.display = '';
+      revealBtn.style.display = 'none';
+    }
+
+    if (mode === 1){
+      eq.innerHTML = '<span class="u">' + a + '</span> ＋ <span class="u">' + b +
+                     '</span> ＝ <b>' + T + '</b>';
+    } else {
+      eq.innerHTML = '<b>' + T + '</b> － <span class="u">' + a + '</span> ＝ ' +
+                     (revealed ? '<b>' + b + '</b>' : '<span class="q">?</span>');
+    }
+  }
+
+  function setFromX(clientX){
+    var r = svg.getBoundingClientRect();
+    var x = (clientX - r.left) / r.width * 420;
+    var v = Math.round((x - X0) / UNIT);
+    v = Math.max(1, Math.min(T - 1, v));
+    if (v !== a){ a = v; revealed = false; render(); }
+  }
+
+  var dragging = false;
+
+  svg.addEventListener('pointerdown', function(ev){
+    dragging = true;
+    setFromX(ev.clientX);
+    if (svg.setPointerCapture){ try { svg.setPointerCapture(ev.pointerId); } catch(e){} }
+    ev.preventDefault();
+  });
+  svg.addEventListener('pointermove', function(ev){
+    if (!dragging) return;
+    setFromX(ev.clientX);
+    ev.preventDefault();
+  });
+  function endDrag(){ dragging = false; }
+  svg.addEventListener('pointerup', endDrag);
+  svg.addEventListener('pointercancel', endDrag);
+  svg.addEventListener('lostpointercapture', endDrag);
+
+  svg.addEventListener('keydown', function(ev){
+    if (ev.key === 'ArrowLeft'  && a > 1)     { a--; revealed = false; render(); ev.preventDefault(); }
+    if (ev.key === 'ArrowRight' && a < T - 1) { a++; revealed = false; render(); ev.preventDefault(); }
+  });
+
+  revealBtn.addEventListener('click', function(){
+    revealed = true;
+    render();
+  });
+
+  function setMode(m){
+    mode = m;
+    revealed = false;
+    tab1.className = (m === 1) ? 'on' : '';
+    tab2.className = (m === 2) ? 'on' : '';
+    render();
+  }
+  tab1.addEventListener('click', function(){ setMode(1); });
+  tab2.addEventListener('click', function(){ setMode(2); });
+
+  render();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'一盒有 8 支铅笔，另一盒有 6 支，两盒一共几支？',
+      opts:['12 支','14 支','16 支'], a:1,
+      why:'8 和 6 都是部分，合起来求总数：8 ＋ 6 ＝ 14。' },
+    { q:'一共 15 个苹果，吃了 7 个，还剩几个？',
+      opts:['8 个','9 个','22 个'], a:0,
+      why:'总数 15，吃掉 7 个是其中一部分，另一部分就是 15 － 7 ＝ 8。' },
+    { q:'算式 9 ＋ 6 ＝ 15 中，15 是（　）。',
+      opts:['部分','总数','差'], a:1,
+      why:'加法是把两个部分合起来，合出来的结果就是总数。' },
+    { q:'总数是 20，一部分是 13，另一部分是多少？',
+      opts:['7','13','33'], a:0,
+      why:'20 － 13 ＝ 7。求另一部分用减法。' },
+    { q:'小明有 5 元，小红有 8 元，两人一共有多少元？',
+      opts:['3 元','13 元','40 元'], a:1,
+      why:'两个人的钱都是部分，合起来：5 ＋ 8 ＝ 13。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

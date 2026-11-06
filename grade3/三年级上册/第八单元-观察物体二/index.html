@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第八单元 · 观察物体（二） | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+  .center{text-align:center;margin:14px 0 0}
+
+  .btn{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:7px 18px;background:var(--accent);border:0;color:#fff;font-weight:600}
+  .btn:hover{background:#d5781f}
+  .btn.ghost{background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级上册</a> ／ 第八单元</p>
+  <h1>第八单元 · 观察物体（二）</h1>
+  <p class="sub">👀 站的位置不同，看到的形状也不同</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>为什么看到的会不一样</h2>
+    <ul class="fact">
+      <li>同一个物体，<b>从前面看</b>和<b>从上面看</b>，形状通常不同</li>
+      <li>看到的图形叫<b>视图</b>：正面、右面、上面</li>
+      <li>被挡住的方块<b>看不见</b>，所以视图会比实际简单</li>
+    </ul>
+    <p class="conclusion">搭积木时，先想「从那边看过去，谁会挡住谁」，就不会数错了。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>搭一搭，看三个视图</h2>
+    <p class="lead">点方块可以改高度：0 → 1 层 → 2 层 → 0。</p>
+
+    <svg id="box" viewBox="0 0 420 300" role="img" aria-label="搭积木并显示三视图">
+      <g id="editor"></g>
+      <g id="views"></g>
+    </svg>
+
+    <p class="hint">左边是俯视图（从上往下看），数字表示这一格堆了几层。</p>
+
+    <div class="center">
+      <button class="btn ghost" id="reset" type="button">清空重来</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>怎么看这三个图</h2>
+    <ul class="fact">
+      <li><b>正面</b>：从左往右看每一列，取<b>最高的那一摞</b></li>
+      <li><b>右面</b>：从前往后看每一排，也取最高的</li>
+      <li><b>上面</b>：所有放了的格子都算，叠起来的只算一个</li>
+    </ul>
+    <p class="conclusion">所以两个不同的搭法，可能有<b>一样的视图</b>——反过来，只给视图，也不一定能确定怎么搭。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第七单元-数量关系的分析/index.html">← 第七单元 · 数量关系的分析（一）</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var N = 3;                 // 3 × 3
+  var MAXH = 2;
+
+  // grid[x][z] = 高度
+  var grid = [
+    [1, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+  ];
+
+  var editor = document.getElementById('editor');
+  var views = document.getElementById('views');
+
+  var EX = 24, EY = 46, EC = 54;     // 俯视图编辑区
+  var VX = 240;                       // 右侧三视图区
+  var VC = 24;
+
+  function el(tag, attrs, text){
+    var e = document.createElementNS(NS, tag);
+    Object.keys(attrs).forEach(function(k){ e.setAttribute(k, attrs[k]); });
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function drawEditor(){
+    editor.innerHTML = '';
+
+    // 提示：前 / 后 / 左 / 右
+    editor.appendChild(el('text', { x: EX + N * EC / 2, y: EY - 14, 'text-anchor': 'middle', 'font-size': '12', fill: '#a2968a' }, '后'));
+    editor.appendChild(el('text', { x: EX + N * EC / 2, y: EY + N * EC + 22, 'text-anchor': 'middle', 'font-size': '12', fill: '#a2968a' }, '前'));
+    editor.appendChild(el('text', { x: EX - 10, y: EY + N * EC / 2, 'text-anchor': 'middle', 'font-size': '12', fill: '#a2968a' }, '左'));
+    editor.appendChild(el('text', { x: EX + N * EC + 10, y: EY + N * EC / 2, 'text-anchor': 'middle', 'font-size': '12', fill: '#a2968a' }, '右'));
+
+    for (var z = 0; z < N; z++){
+      for (var x = 0; x < N; x++){
+        var h = grid[x][z];
+        var px = EX + x * EC, py = EY + z * EC;
+
+        var r = el('rect', {
+          x: px, y: py, width: EC - 4, height: EC - 4, rx: 8,
+          fill: h === 0 ? '#fffaf3' : (h === 1 ? '#fde3c6' : '#f6c893'),
+          stroke: h === 0 ? '#e8dbc9' : '#e8862e',
+          'stroke-width': 2,
+          style: 'cursor:pointer'
+        });
+        (function(xx, zz){
+          r.addEventListener('click', function(){
+            grid[xx][zz] = (grid[xx][zz] + 1) % (MAXH + 1);
+            drawEditor();
+            drawViews();
+          });
+        })(x, z);
+        editor.appendChild(r);
+
+        if (h > 0){
+          editor.appendChild(el('text', {
+            x: px + EC / 2 - 2, y: py + EC / 2 + 2,
+            'text-anchor': 'middle', 'dominant-baseline': 'central',
+            'font-size': '18', 'font-weight': '700', fill: '#b96a1c'
+          }, h));
+        }
+      }
+    }
+  }
+
+  function drawViews(){
+    views.innerHTML = '';
+
+    // 正面：按 x 取这一列最高
+    var front = [];
+    for (var x = 0; x < N; x++){
+      var m = 0;
+      for (var z = 0; z < N; z++) m = Math.max(m, grid[x][z]);
+      front.push(m);
+    }
+    // 右面：按 z 取这一排最高
+    var side = [];
+    for (var z2 = 0; z2 < N; z2++){
+      var m2 = 0;
+      for (var x2 = 0; x2 < N; x2++) m2 = Math.max(m2, grid[x2][z2]);
+      side.push(m2);
+    }
+
+    function block(x, y, filled){
+      return el('rect', {
+        x: x, y: y, width: VC - 3, height: VC - 3, rx: 4,
+        fill: filled ? '#e8862e' : '#fffaf3',
+        stroke: filled ? '#e8862e' : '#e8dbc9',
+        'stroke-width': 1.6,
+        opacity: filled ? 0.88 : 1
+      });
+    }
+
+    // 正面图
+    var fy = 40;
+    views.appendChild(el('text', { x: VX + N * VC / 2, y: fy - 10, 'text-anchor': 'middle', 'font-size': '12', fill: '#8a8078' }, '正面'));
+    for (var i = 0; i < N; i++){
+      for (var level = 0; level < MAXH; level++){
+        var on = level < front[i];
+        views.appendChild(block(VX + i * VC, fy + (MAXH - 1 - level) * VC, on));
+      }
+    }
+
+    // 右面图
+    var sy = 130;
+    views.appendChild(el('text', { x: VX + N * VC / 2, y: sy - 10, 'text-anchor': 'middle', 'font-size': '12', fill: '#8a8078' }, '右面'));
+    for (var j = 0; j < N; j++){
+      for (var lv = 0; lv < MAXH; lv++){
+        var on2 = lv < side[j];
+        views.appendChild(block(VX + j * VC, sy + (MAXH - 1 - lv) * VC, on2));
+      }
+    }
+
+    // 上面图
+    var ty = 218;
+    views.appendChild(el('text', { x: VX + N * VC / 2, y: ty - 10, 'text-anchor': 'middle', 'font-size': '12', fill: '#8a8078' }, '上面'));
+    for (var zz = 0; zz < N; zz++){
+      for (var xx = 0; xx < N; xx++){
+        views.appendChild(block(VX + xx * VC, ty + zz * VC, grid[xx][zz] > 0));
+      }
+    }
+  }
+
+  document.getElementById('reset').addEventListener('click', function(){
+    grid = [[0,0,0],[0,0,0],[0,0,0]];
+    drawEditor();
+    drawViews();
+  });
+
+  drawEditor();
+  drawViews();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'从不同位置观察同一个物体，看到的形状（　）。',
+      opts:['一定相同','可能不同','一定不同'], a:1,
+      why:'多数时候不同，但也有可能相同，所以说「可能不同」。' },
+    { q:'从上面看一个由积木搭的物体，看到的是（　）。',
+      opts:['每一摞的最高处','所有放了的格子，叠起来只算一个','最前面那一排'], a:1,
+      why:'从上往下看，看得到每一个位置，但同一位置叠几个都只算一个。' },
+    { q:'从正面看，同一列堆了 1 层和 2 层两个方块，正面看到几个方格？',
+      opts:['1 个','2 个','3 个'], a:1,
+      why:'取最高的那一摞：2 层就画 2 个方格。' },
+    { q:'两个搭法不一样，它们的正面视图（　）。',
+      opts:['一定不同','可能相同','一定相同'], a:1,
+      why:'视图会「压扁」，不同的搭法常常有相同的视图。' },
+    { q:'只看一个正面视图，能确定积木怎么搭吗？',
+      opts:['能','不能，可能有很多种','看颜色就能'], a:1,
+      why:'一个方向的视图信息不够，要结合右面和上面才可能确定。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

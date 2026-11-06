@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一单元 · 两、三位数乘一位数 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+  .tabs button{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:6px 16px;background:#fff;border:1.5px solid #e9dbc9;color:var(--muted);transition:.15s;font-variant-numeric:tabular-nums}
+  .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:#b96a1c;font-weight:700}
+
+  .eq{text-align:center;font-size:22px;font-weight:700;margin:16px 0 0;font-variant-numeric:tabular-nums;line-height:1.9}
+  .eq .u{color:var(--accent)}
+  .eq b{color:var(--blue)}
+  .say{text-align:center;font-size:14px;color:var(--muted);margin:6px 0 0}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0 0}
+  .chips span{font-size:13px;border-radius:999px;padding:2px 12px;font-variant-numeric:tabular-nums}
+
+  .steps{margin:6px 0 0}
+  .step{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);opacity:0;transition:opacity .3s}
+  .step.on{opacity:1}
+  .step:last-child{border-bottom:0}
+  .step .idx{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .step .txt{font-size:15px}
+  .step .txt b{color:var(--accent)}
+  .step .txt code{font-family:inherit;background:#fdf6ee;border-radius:6px;padding:1px 6px}
+
+  .btn{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:7px 18px;background:var(--accent);border:0;color:#fff;font-weight:600}
+  .btn:hover{background:#d5781f}
+  .btn.ghost{background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .eq{font-size:18px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级上册</a> ／ 第二单元</p>
+  <h1>第二单元 · 两、三位数乘一位数</h1>
+  <p class="sub">✖️ 拆成几块算，再合起来</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>先会口算</h2>
+    <p class="lead">整十、整百数乘一位数，先想「几个十、几个百」。</p>
+    <ul class="fact">
+      <li>20 × 3 ＝ 60　因为 2 个十 × 3 ＝ 6 个十</li>
+      <li>200 × 3 ＝ 600　因为 2 个百 × 3 ＝ 6 个百</li>
+      <li>0 × 3 ＝ 0　0 乘任何数都得 0</li>
+    </ul>
+    <p class="conclusion">被乘数末尾有 0，可以先不看它，算完再<b>把 0 补回去</b>。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>拆成几块，就好算了</h2>
+    <p class="lead">把两位数拆成「整十数 ＋ 个位数」，分别乘，再加起来。</p>
+
+    <div class="tabs" id="picks"></div>
+
+    <svg id="area" viewBox="0 0 420 300" role="img" aria-label="把多位数拆成几块分别相乘">
+      <g id="blocks"></g>
+    </svg>
+
+    <div class="chips" id="chips"></div>
+    <p class="eq" id="eq"></p>
+    <p class="say" id="say"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>写成竖式：别忘了进位</h2>
+    <p class="lead">用 48 × 3 走一遍。</p>
+
+    <div class="steps" id="steps">
+      <div class="step" data-s="1">
+        <div class="idx">1</div>
+        <div class="txt">先算个位：8 × 3 ＝ <b>24</b>。个位写 <b>4</b>，向十位进 <b>2</b>。</div>
+      </div>
+      <div class="step" data-s="2">
+        <div class="idx">2</div>
+        <div class="txt">再算十位：4 × 3 ＝ 12，<b>再加上进位的 2</b>，得 14。</div>
+      </div>
+      <div class="step" data-s="3">
+        <div class="idx">3</div>
+        <div class="txt">十位写 4，百位写 1。所以 <code>48 × 3 ＝ 144</code>。</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <button class="btn" id="next" type="button">下一步</button>
+      <button class="btn ghost" id="again" type="button">重来</button>
+    </div>
+
+    <p class="hint">最容易错的地方：<b>进位那 2 一定要加进去</b>，忘了就少算了 20。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第一单元-混合运算与数量关系/index.html">← 第一单元 · 混合运算与数量关系</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第二单元-曹冲称象/index.html">☆ 曹冲称象 · 千克和克 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+
+  var CASES = [
+    { a:23,  b:3 },
+    { a:48,  b:3 },
+    { a:126, b:2 }
+  ];
+  var cur = 0;
+
+  var picksBox = document.getElementById('picks');
+  var blocks = document.getElementById('blocks');
+  var eq = document.getElementById('eq');
+  var say = document.getElementById('say');
+
+  CASES.forEach(function(c, i){
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = c.a + ' × ' + c.b;
+    btn.className = (i === 0) ? 'on' : '';
+    btn.addEventListener('click', function(){
+      cur = i;
+      Array.prototype.forEach.call(picksBox.children, function(x, j){
+        x.className = (j === i) ? 'on' : '';
+      });
+      render();
+    });
+    picksBox.appendChild(btn);
+  });
+
+  function split(n){
+    // 按数位拆：126 -> [100, 20, 6]
+    var s = String(n), out = [], len = s.length;
+    for (var i = 0; i < len; i++){
+      var d = parseInt(s[i], 10);
+      if (d === 0) continue;
+      out.push(d * Math.pow(10, len - 1 - i));
+    }
+    return out;
+  }
+
+  var COLORS = ['#fde3c6', '#dbe7fa', '#d5f0e0'];
+  var STROKE = ['#e8862e', '#4a7fd4', '#2f9e68'];
+
+  function render(){
+    var c = CASES[cur];
+    var parts = split(c.a);
+    blocks.innerHTML = '';
+
+    var X0 = 50, MAXW = 330;
+    var total = c.a;
+    var scale = MAXW / total;
+    var H = Math.min(150, 46 * c.b);
+    var Y0 = 70;
+
+    var x = X0;
+    parts.forEach(function(v, i){
+      var w = v * scale;
+
+      var r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', x);
+      r.setAttribute('y', Y0);
+      r.setAttribute('width', Math.max(w - 2, 6));
+      r.setAttribute('height', H);
+      r.setAttribute('rx', 8);
+      r.setAttribute('fill', COLORS[i % 3]);
+      r.setAttribute('stroke', STROKE[i % 3]);
+      r.setAttribute('stroke-width', 2);
+      blocks.appendChild(r);
+
+      var t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', x + Math.max(w, 6) / 2);
+      t.setAttribute('y', Y0 + H / 2 + 5);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('font-size', '15');
+      t.setAttribute('font-weight', '700');
+      t.setAttribute('fill', STROKE[i % 3]);
+      t.textContent = v + '×' + c.b + '=' + (v * c.b);
+      if (w >= 78) blocks.appendChild(t);   // 太窄的块不写字，用下面的色块说明
+
+      x += w;
+    });
+
+    var top = document.createElementNS(NS, 'text');
+    top.setAttribute('x', X0 + MAXW / 2);
+    top.setAttribute('y', 44);
+    top.setAttribute('text-anchor', 'middle');
+    top.setAttribute('font-size', '14');
+    top.setAttribute('fill', '#8a8078');
+    top.textContent = c.a;
+    blocks.appendChild(top);
+
+    var side = document.createElementNS(NS, 'text');
+    side.setAttribute('x', X0 - 16);
+    side.setAttribute('y', Y0 + H / 2);
+    side.setAttribute('text-anchor', 'middle');
+    side.setAttribute('font-size', '14');
+    side.setAttribute('fill', '#8a8078');
+    side.setAttribute('transform', 'rotate(-90 ' + (X0 - 16) + ' ' + (Y0 + H / 2) + ')');
+    side.textContent = '× ' + c.b;
+    blocks.appendChild(side);
+
+    var lines = [];
+    parts.forEach(function(v){
+      lines.push(v + ' × ' + c.b + ' ＝ ' + (v * c.b));
+    });
+    eq.innerHTML = lines.join('　　') + '<br>' +
+                   parts.map(function(v){ return v * c.b; }).join(' ＋ ') +
+                   ' ＝ <b>' + (c.a * c.b) + '</b>';
+
+    var chips = document.getElementById('chips');
+    chips.innerHTML = parts.map(function(v, i){
+      return '<span style="background:' + COLORS[i % 3] + ';color:' + STROKE[i % 3] + '">' +
+             v + ' × ' + c.b + ' ＝ ' + (v * c.b) + '</span>';
+    }).join('');
+
+    say.innerHTML = '把 ' + c.a + ' 拆成 ' + parts.join(' 和 ') + '，每块分别乘 ' + c.b + '，再加起来。';
+  }
+
+  render();
+
+  /* ========== 竖式三步 ========== */
+  var steps = document.querySelectorAll('.step');
+  var stepIdx = 0;
+
+  function showStep(){
+    Array.prototype.forEach.call(steps, function(s, i){
+      s.classList.toggle('on', i < stepIdx);
+    });
+  }
+  document.getElementById('next').addEventListener('click', function(){
+    if (stepIdx < steps.length){ stepIdx++; showStep(); }
+  });
+  document.getElementById('again').addEventListener('click', function(){
+    stepIdx = 0; showStep();
+  });
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'20 × 4 等于多少？', opts:['8','80','800'], a:1,
+      why:'2 个十 × 4 ＝ 8 个十，就是 80。' },
+    { q:'300 × 2 等于多少？', opts:['60','600','6000'], a:1,
+      why:'3 个百 × 2 ＝ 6 个百，就是 600。' },
+    { q:'23 × 3 等于多少？', opts:['69','66','29'], a:0,
+      why:'20 × 3 ＝ 60，3 × 3 ＝ 9，60 ＋ 9 ＝ 69。' },
+    { q:'48 × 3 的积是多少？', opts:['124','144','154'], a:1,
+      why:'8 × 3 ＝ 24，个位写 4 进 2；4 × 3 ＝ 12，再加 2 得 14，所以是 144。' },
+    { q:'0 × 7 等于多少？', opts:['0','7','70'], a:0,
+      why:'0 乘任何数都得 0。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

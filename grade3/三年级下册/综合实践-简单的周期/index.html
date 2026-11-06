@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第五单元 · 简单的周期 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+  .tabs button{
+    font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:6px 16px;
+    background:#fff;border:1.5px solid #e9dbc9;color:var(--muted);transition:.15s;
+  }
+  .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:#b96a1c;font-weight:700}
+
+  .eq{margin:16px 0 0;text-align:center;font-size:26px;font-weight:700;letter-spacing:1px;font-variant-numeric:tabular-nums}
+  .eq .u{color:var(--accent)}
+  .eq .r{color:var(--blue)}
+
+  .say{margin:10px 0 0;text-align:center;font-size:15px;color:var(--muted)}
+  .say b{color:var(--ink);font-size:17px}
+
+  .ctrl{display:flex;align-items:center;gap:12px;margin:16px 0 0;flex-wrap:wrap}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1 1 180px;height:6px;border-radius:6px;background:#f0e3d3;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 1px 4px rgba(180,110,40,.35);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;cursor:pointer}
+
+  .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0}
+  .rules div{background:#fdf6ee;border-radius:12px;padding:10px 12px;font-size:14px;color:var(--muted)}
+  .rules div b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+  .hint kbd{font:inherit;font-size:12px;background:#f4ece2;border:1px solid #e8dbc9;border-radius:5px;padding:1px 6px}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:560px){ .rules{grid-template-columns:1fr} }
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .eq{font-size:22px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级下册</a> ／ 综合实践</p>
+  <h1>☆ 简单的周期</h1>
+  <p class="sub">🔄 一组图形不停地重复，找到这一组就赢了</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>什么叫一个周期</h2>
+    <p class="lead">下面这排图形，几个一组在重复？</p>
+    <ul class="fact">
+      <li>○ △ □ ｜ ○ △ □ ｜ ○ △ □</li>
+      <li>重复出现的这一组，就是 <b>1 个周期</b></li>
+      <li>这排的周期是 <b>3</b> 个图形</li>
+    </ul>
+    <p class="conclusion">接下去永远是它。所以想知道「第几个是什么」，只要算它<b>落在第几个周期、第几个位置</b>。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>周期侦探</h2>
+    <p class="lead">拖滑块，找到第 n 个图形。</p>
+
+    <div class="tabs" id="periods"></div>
+
+    <svg id="board" viewBox="0 0 420 220" tabindex="0" role="img" aria-label="按周期排列的图形">
+      <g id="seq"></g>
+    </svg>
+
+    <div class="ctrl">
+      <input id="nRange" type="range" min="1" max="12" value="7" aria-label="第几个">
+    </div>
+
+    <p class="eq" id="eq"></p>
+    <p class="say" id="say"></p>
+
+    <p class="hint">键盘：<kbd>←</kbd> <kbd>→</kbd> 一个一个挪。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>余数说什么，就是什么</h2>
+    <p class="lead">除法的余数，直接告诉你答案在第几个位置。</p>
+    <div class="rules">
+      <div><b>余 1</b>就是这一组的第 1 个</div>
+      <div><b>余 2</b>就是这一组的第 2 个</div>
+      <div><b>正好除尽</b>就是这一组的最后一个</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题，先想周期，再动笔。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第三单元-两位数乘两位数/index.html">← 第三单元 · 两位数乘两位数</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第四单元-统计表和条形统计图/index.html">第四单元 · 统计表和条形统计图（一） →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var PERIODS = [
+    { k:3, shapes:['circle','triangle','square'],     colors:['#e8862e','#4a7fd4','#2f9e68'], names:['○','△','□'] },
+    { k:4, shapes:['circle','triangle','square','diamond'], colors:['#e8862e','#4a7fd4','#2f9e68','#d05353'], names:['○','△','□','◇'] },
+    { k:2, shapes:['circle','square'],                colors:['#e8862e','#4a7fd4'], names:['○','□'] }
+  ];
+
+  var pi = 0;       // 当前周期
+  var n = 7;        // 第几个
+
+  var periodsBox = document.getElementById('periods');
+  var seq = document.getElementById('seq');
+  var nRange = document.getElementById('nRange');
+  var eq = document.getElementById('eq');
+  var say = document.getElementById('say');
+
+  PERIODS.forEach(function(p, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = p.k + ' 个一循环';
+    b.className = (i === 0) ? 'on' : '';
+    b.addEventListener('click', function(){
+      pi = i;
+      Array.prototype.forEach.call(periodsBox.children, function(c, j){
+        c.className = (j === i) ? 'on' : '';
+      });
+      draw();
+    });
+    periodsBox.appendChild(b);
+  });
+
+  var NS = 'http://www.w3.org/2000/svg';
+
+  function shapeEl(kind, cx, cy, s, color){
+    var el;
+    if (kind === 'circle'){
+      el = document.createElementNS(NS, 'circle');
+      el.setAttribute('cx', cx); el.setAttribute('cy', cy); el.setAttribute('r', s);
+      el.setAttribute('fill', 'none'); el.setAttribute('stroke', color); el.setAttribute('stroke-width', 4);
+    } else if (kind === 'triangle'){
+      el = document.createElementNS(NS, 'path');
+      el.setAttribute('d', 'M ' + cx + ' ' + (cy - s) + ' L ' + (cx + s * 1.05) + ' ' + (cy + s * 0.8) +
+                          ' L ' + (cx - s * 1.05) + ' ' + (cy + s * 0.8) + ' Z');
+      el.setAttribute('fill', 'none'); el.setAttribute('stroke', color); el.setAttribute('stroke-width', 4);
+      el.setAttribute('stroke-linejoin', 'round');
+    } else if (kind === 'square'){
+      el = document.createElementNS(NS, 'rect');
+      el.setAttribute('x', cx - s * 0.9); el.setAttribute('y', cy - s * 0.9);
+      el.setAttribute('width', s * 1.8); el.setAttribute('height', s * 1.8);
+      el.setAttribute('fill', 'none'); el.setAttribute('stroke', color); el.setAttribute('stroke-width', 4);
+      el.setAttribute('rx', 2);
+    } else {
+      el = document.createElementNS(NS, 'path');
+      el.setAttribute('d', 'M ' + cx + ' ' + (cy - s) + ' L ' + (cx + s) + ' ' + cy +
+                          ' L ' + cx + ' ' + (cy + s) + ' L ' + (cx - s) + ' ' + cy + ' Z');
+      el.setAttribute('fill', 'none'); el.setAttribute('stroke', color); el.setAttribute('stroke-width', 4);
+      el.setAttribute('stroke-linejoin', 'round');
+    }
+    return el;
+  }
+
+  function draw(){
+    var p = PERIODS[pi];
+    var k = p.k;
+    seq.innerHTML = '';
+
+    for (var i = 0; i < 12; i++){
+      var col = i % 6, row = Math.floor(i / 6);
+      var cx = 45 + col * 62;
+      var cy = 60 + row * 80;
+
+      var hit = (i + 1) === n;
+
+      if (hit){
+        var box = document.createElementNS(NS, 'rect');
+        box.setAttribute('x', cx - 25); box.setAttribute('y', cy - 28);
+        box.setAttribute('width', 50); box.setAttribute('height', 56);
+        box.setAttribute('rx', 14);
+        box.setAttribute('fill', '#fdeedd');
+        box.setAttribute('stroke', '#e8862e');
+        box.setAttribute('stroke-width', 2);
+        seq.appendChild(box);
+      }
+
+      var idx = i % k;
+      seq.appendChild(shapeEl(p.shapes[idx], cx, cy, 13, p.colors[idx]));
+
+      var num = document.createElementNS(NS, 'text');
+      num.setAttribute('x', cx); num.setAttribute('y', cy + 40);
+      num.setAttribute('text-anchor', 'middle');
+      num.setAttribute('font-size', '11');
+      num.setAttribute('fill', hit ? '#c9761f' : '#b8ada2');
+      num.setAttribute('font-weight', hit ? '700' : '400');
+      num.textContent = i + 1;
+      seq.appendChild(num);
+    }
+
+    var q = Math.floor(n / k), r = n % k;
+    var idxOfR = (r === 0) ? k - 1 : r - 1;
+
+    eq.innerHTML = '<span class="u">' + n + '</span> ÷ ' + k + ' ＝ ' + q +
+                   ' …… <span class="r">' + r + '</span>';
+
+    var txt;
+    if (r === 0){
+      txt = '正好分了 <b>' + q + '</b> 整组，所以第 ' + n + ' 个是这一组的<b>最后一个 ' +
+            p.names[k - 1] + '</b>';
+    } else {
+      txt = '分完 <b>' + q + '</b> 整组，还剩 <b>' + r + '</b> 个，所以第 ' + n +
+            ' 个是这一组的第 ' + r + ' 个 <b>' + p.names[idxOfR] + '</b>';
+    }
+    say.innerHTML = txt;
+
+    nRange.value = Math.min(12, Math.max(1, n));
+  }
+
+  nRange.addEventListener('input', function(){
+    n = parseInt(nRange.value, 10);
+    draw();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.target && e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowLeft'  && n > 1)  { n--; draw(); }
+    if (e.key === 'ArrowRight' && n < 12) { n++; draw(); }
+  });
+
+  draw();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'○ △ □ ○ △ □ ○ △ □ …… 第 7 个是什么？',
+      opts:['○','△','□'], a:0,
+      why:'7 ÷ 3 ＝ 2 …… 1，余 1 就是这一组的第 1 个，是 ○。' },
+    { q:'每 4 个图形为一组，第 8 个是这一组的第几个？',
+      opts:['第 4 个','第 2 个','第 8 个'], a:0,
+      why:'8 ÷ 4 ＝ 2，正好除尽，所以是这一组的最后一个，也就是第 4 个。' },
+    { q:'2、4、6、2、4、6 …… 第 10 个数是多少？',
+      opts:['2','4','6'], a:0,
+      why:'10 ÷ 3 ＝ 3 …… 1，余 1，是这一组的第 1 个数，也就是 2。' },
+    { q:'今天是星期一，再过 7 天是星期几？',
+      opts:['星期日','星期一','星期二'], a:1,
+      why:'7 ÷ 7 ＝ 1，正好整一个周期，所以还是星期一。' },
+    { q:'一列图形按 △ ○ ◇ ◇ 重复，第 9 个是什么？',
+      opts:['△','○','◇'], a:0,
+      why:'9 ÷ 4 ＝ 2 …… 1，余 1，是这一组的第 1 个，△。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小学数学可视化 · 三年级</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --green-soft:#e7f4ec; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:44px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1{font-size:34px;margin:0 0 6px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 36px}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .set{
+    display:block;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px;color:var(--ink);box-shadow:0 1px 2px rgba(90,66,40,.04);transition:.18s;
+  }
+  .set:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 26px rgba(190,130,60,.14);text-decoration:none}
+  .set .tag{
+    display:inline-block;font-size:12px;font-weight:700;border-radius:999px;
+    padding:2px 10px;margin:0 0 10px;background:var(--accent-soft);color:#b96a1c;
+  }
+  .set.b .tag{background:var(--blue-soft);color:#3f6fc4}
+  .set.g .tag{background:var(--green-soft);color:#276c4a}
+  .set h2{font-size:20px;margin:0 0 4px}
+  .set p{font-size:13px;color:var(--muted);margin:0}
+  .set .n{font-size:12px;color:#b0a496;margin-top:10px;display:block}
+
+  .foot{margin:36px 0 0;padding:16px 20px;border-radius:14px;background:#fdf6ee;font-size:13px;color:#6b6258}
+  .foot b{color:var(--ink)}
+
+  @media(max-width:640px){ .grid{grid-template-columns:1fr} h1{font-size:27px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>🧮 小学数学可视化</h1>
+  <p class="sub">三年级 · 四个学期 · 每个单元都能动手玩一下</p>
+
+  <div class="grid">
+
+    <a class="set" href="grade3/三年级上册/index.html">
+      <span class="tag">苏教版 · 上册</span>
+      <h2>三年级上册</h2>
+      <p>8 个单元：混合运算、乘一位数、数据整理、毫米分米千米、平移旋转、除法、数量关系、观察物体</p>
+      <span class="n">10 个页面 · 含 ☆ 曹冲称象</span>
+    </a>
+
+    <a class="set b" href="grade3/三年级下册/index.html">
+      <span class="tag">苏教版 · 下册</span>
+      <h2>三年级下册</h2>
+      <p>6 个单元：角、加法数量关系、两位数乘两位数、统计图表、长方形和正方形、分数</p>
+      <span class="n">11 个页面 · 含 4 个 ☆ 综合实践</span>
+    </a>
+
+    <a class="set g" href="grade3/三年级上册-人教版/index.html">
+      <span class="tag">人教版 · 上册</span>
+      <h2>三年级上册</h2>
+      <p>10 个单元：观察物体、混合运算、测量、曹冲称象、乘法、数字编码、线和角、分数、复习、搭配</p>
+      <span class="n">11 个页面</span>
+    </a>
+
+    <a class="set" href="grade3/三年级下册-人教版/index.html">
+      <span class="tag">人教版 · 下册</span>
+      <h2>三年级下册</h2>
+      <p>8 个单元：运动现象、除法、长方形正方形、面积、数据整理、年月日、小数、复习</p>
+      <span class="n">9 个页面</span>
+    </a>
+
+  </div>
+
+  <p class="foot">
+    纯静态页面，无依赖、无构建。手机、平板、电脑都能用，图形可以手指拖动。<br>
+    改法见仓库里的 <b>使用说明.md</b>；本地看直接双击任意 <b>index.html</b>。
+  </p>
+
+</div>
+</body>
+</html>

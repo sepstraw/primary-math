@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第八单元 · 复习与关联 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th,td{border:1px solid #e8dbc9;padding:10px 12px;text-align:left;vertical-align:top}
+  thead th{background:#fdf6ee;font-size:13px;color:#6b6258}
+  tbody tr:hover{background:#fffdf9}
+  td.u{white-space:nowrap;font-weight:600;width:34%}
+  td.u a{color:var(--ink)}
+  td.u a:hover{color:var(--accent)}
+  td.trap{color:var(--red);font-size:13px;width:40%}
+  .num{color:var(--accent);font-weight:700;margin-right:4px}
+
+  .check{display:flex;flex-direction:column;gap:8px;margin:0}
+  .check label{
+    display:flex;gap:10px;align-items:flex-start;cursor:pointer;
+    background:#fdf6ee;border-radius:12px;padding:10px 14px;font-size:14px;
+    border:1.5px solid transparent;transition:.15s;
+  }
+  .check label:hover{border-color:#e9dbc9}
+  .check input{margin-top:5px;width:18px;height:18px;accent-color:#2f9e68;flex:none;cursor:pointer}
+  .check input:checked + span{color:#276c4a}
+  .check label:has(input:checked){background:#e7f4ec;border-color:#bde3cd}
+
+  .count{text-align:center;font-size:15px;color:var(--muted);margin:16px 0 0}
+  .count b{color:var(--accent);font-size:22px}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:640px){
+    table{font-size:13px}
+    td.u{width:auto}
+    th,td{padding:8px}
+  }
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级下册</a> ／ 第八单元</p>
+  <h1>第八单元 · 复习与关联</h1>
+  <p class="sub">🔁 把这一学期串起来看一遍</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>七个单元，一句话一个</h2>
+    <p class="lead">点单元名可以回去再看那页。</p>
+
+    <table>
+      <thead>
+        <tr><th>单元</th><th>核心就一句话</th><th>最容易错</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="u"><span class="num">1</span><a href="../第一单元-生活中的运动现象/index.html">生活中的运动现象</a></td>
+          <td>平移是沿直线走，旋转是绕一点转</td>
+          <td class="trap">两种变化都不改变形状和大小</td>
+        </tr>
+        <tr>
+          <td class="u"><span class="num">2</span><a href="../第二单元-除数是一位数的除法/index.html">除数是一位数的除法</a></td>
+          <td>从最高位除起，除不尽就落下来</td>
+          <td class="trap">余数必须比除数小</td>
+        </tr>
+        <tr>
+          <td class="u"><span class="num">3</span><a href="../第三单元-长方形和正方形/index.html">长方形和正方形</a></td>
+          <td>周长 ＝ (长 ＋ 宽) × 2</td>
+          <td class="trap">周长是绕一圈，别和面积混</td>
+        </tr>
+        <tr>
+          <td class="u"><span class="num">4</span><a href="../第四单元-图形的面积/index.html">图形的面积</a></td>
+          <td>长方形面积 ＝ 长 × 宽</td>
+          <td class="trap">面积单位要带「平方」</td>
+        </tr>
+        <tr>
+          <td class="u"><span class="num">5</span><a href="../第五单元-数据的收集与整理/index.html">数据的收集与整理</a></td>
+          <td>先收集，再整理，最后分析</td>
+          <td class="trap">合计是把各项加起来，不是数格子</td>
+        </tr>
+        <tr>
+          <td class="u"><span class="num">6</span><a href="../第六单元-年月日/index.html">年、月、日的秘密</a></td>
+          <td>大月 31 天，小月 30 天，二月看闰年</td>
+          <td class="trap">平年二月 28 天，闰年 29 天</td>
+        </tr>
+        <tr>
+          <td class="u"><span class="num">7</span><a href="../第七单元-小数的初步认识/index.html">小数的初步认识</a></td>
+          <td>1/10 就是 0.1</td>
+          <td class="trap">比大小先看小数点左边</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>我会了吗</h2>
+    <p class="lead">能一口气说清楚，就打勾。</p>
+
+    <div class="check" id="checks">
+      <label><input type="checkbox"><span>能举例说出生活中的<b>平移</b>和<b>旋转</b></span></label>
+      <label><input type="checkbox"><span>做除法时，能检查<b>余数比除数小</b></span></label>
+      <label><input type="checkbox"><span>能分清<b>周长</b>和<b>面积</b>，并说出各自的单位</span></label>
+      <label><input type="checkbox"><span>知道怎么算<b>长方形、正方形</b>的周长和面积</span></label>
+      <label><input type="checkbox"><span>能自己设计一张<b>调查表</b>并整理成统计表</span></label>
+      <label><input type="checkbox"><span>能判断某一年是平年还是闰年</span></label>
+      <label><input type="checkbox"><span>能把 <b>3/10 米</b> 写成小数，也能把 <b>0.6 元</b> 说成几角</span></label>
+    </div>
+
+    <p class="count">已经打勾 <b id="cnt">0</b> / 7</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>这些单元是连着的</h2>
+    <ul class="fact" style="display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none">
+      <li style="background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px">长方形和正方形 ↔ 图形的面积：先学<b>绕一圈</b>，再学<b>铺满</b></li>
+      <li style="background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px">除法 ↔ 面积：长 × 宽 ＝ 面积，反过来 <b>面积 ÷ 长 ＝ 宽</b></li>
+      <li style="background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px">小数 ↔ 数据整理：都以「<b>1 份是多少</b>」打底</li>
+    </ul>
+    <p class="conclusion">复习不是重学一遍，是把散着的知识点<b>连成线</b>。</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第七单元-小数的初步认识/index.html">← 第七单元 · 小数的初步认识</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var boxes = document.querySelectorAll('#checks input');
+  var cnt = document.getElementById('cnt');
+  function update(){
+    var n = 0;
+    Array.prototype.forEach.call(boxes, function(b){ if (b.checked) n++; });
+    cnt.textContent = n;
+  }
+  Array.prototype.forEach.call(boxes, function(b){
+    b.addEventListener('change', update);
+  });
+  update();
+})();
+</script>
+</body>
+</html>

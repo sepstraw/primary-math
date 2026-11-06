@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第四单元 · 毫米、分米和千米 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .chain{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;margin:0}
+  .chain .u{background:#fdf6ee;border:1.5px solid #e8dbc9;border-radius:12px;padding:8px 14px;font-size:16px;font-weight:700}
+  .chain .x{font-size:12px;color:var(--muted);text-align:center;line-height:1.3}
+  .chain .x b{display:block;color:var(--accent);font-size:13px}
+
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:#f0e3d3;outline:none;margin:16px 0 0}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 1px 4px rgba(180,110,40,.35);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;cursor:pointer}
+
+  .eq{text-align:center;font-size:26px;font-weight:700;margin:18px 0 0;font-variant-numeric:tabular-nums;line-height:2}
+  .eq .u{color:var(--accent)}
+  .eq b{color:var(--blue)}
+  .say{text-align:center;font-size:14px;color:var(--muted);margin:6px 0 0}
+
+  table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums;margin:4px 0 0}
+  th,td{border:1px solid #e8dbc9;padding:8px 10px;text-align:center}
+  thead th{background:#fdf6ee}
+  tbody td:first-child{background:#fdf6ee;font-weight:600}
+  .hl{color:var(--accent);font-weight:700}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .eq{font-size:20px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级上册</a> ／ 第四单元</p>
+  <h1>第四单元 · 毫米、分米和千米</h1>
+  <p class="sub">📏 量小的用毫米，量远的用千米</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>五个长度单位，一条链子</h2>
+    <div class="chain">
+      <span class="u">毫米</span>
+      <span class="x">×<b>10</b></span>
+      <span class="u">厘米</span>
+      <span class="x">×<b>10</b></span>
+      <span class="u">分米</span>
+      <span class="x">×<b>10</b></span>
+      <span class="u">米</span>
+      <span class="x">×<b>1000</b></span>
+      <span class="u">千米</span>
+    </div>
+    <p class="conclusion">相邻两个单位之间都是 <b>10 倍</b>，只有<b>米和千米之间是 1000 倍</b>。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>在尺子上找毫米</h2>
+    <p class="lead">这把尺子一共 10 厘米，拖一拖，量一段长度。</p>
+
+    <svg id="ruler" viewBox="0 0 420 180" role="img" aria-label="可以量到毫米的尺子">
+      <rect x="30" y="70" width="360" height="52" rx="6" fill="#fffdfa" stroke="#e0d3c2" stroke-width="2"/>
+      <g id="ticks"></g>
+      <line id="mark" y1="56" y2="132" stroke="#d05353" stroke-width="3" stroke-linecap="round"></line>
+      <text id="markTxt" y="42" text-anchor="middle" font-size="14" font-weight="700" fill="#d05353"></text>
+    </svg>
+
+    <input id="mmR" type="range" min="0" max="100" value="35" aria-label="毫米">
+
+    <p class="eq" id="eq"></p>
+    <p class="say" id="say"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>怎么换算</h2>
+    <table>
+      <thead><tr><th>关系</th><th>换成小单位</th><th>例子</th></tr></thead>
+      <tbody>
+        <tr><td>1 厘米 ＝ 10 毫米</td><td>× 10</td><td class="hl">3 厘米 ＝ 30 毫米</td></tr>
+        <tr><td>1 分米 ＝ 10 厘米</td><td>× 10</td><td class="hl">5 分米 ＝ 50 厘米</td></tr>
+        <tr><td>1 米 ＝ 10 分米</td><td>× 10</td><td class="hl">2 米 ＝ 20 分米</td></tr>
+        <tr><td>1 千米 ＝ 1000 米</td><td>× 1000</td><td class="hl">4 千米 ＝ 4000 米</td></tr>
+      </tbody>
+    </table>
+
+    <p class="conclusion">大单位换小单位用 <b>乘</b>，小单位换大单位用 <b>除</b>。3 厘米 5 毫米 ＝ <b>35 毫米</b>，因为 30 ＋ 5 ＝ 35。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第三单元-数据的收集与整理/index.html">← 第三单元 · 数据的收集与整理</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第五单元-平移旋转和轴对称/index.html">第五单元 · 平移、旋转和轴对称 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var X0 = 30, X1 = 390, MM = 100;
+  var PER = (X1 - X0) / MM;      // 每毫米像素
+
+  var ticks = document.getElementById('ticks');
+  var mark = document.getElementById('mark');
+  var markTxt = document.getElementById('markTxt');
+  var mmR = document.getElementById('mmR');
+  var eq = document.getElementById('eq');
+  var say = document.getElementById('say');
+
+  (function draw(){
+    var s = '';
+    for (var i = 0; i <= MM; i++){
+      var x = X0 + i * PER;
+      var isCm = i % 10 === 0;
+      var is5 = i % 5 === 0;
+      var h = isCm ? 22 : (is5 ? 14 : 8);
+      s += '<line x1="' + x + '" y1="70" x2="' + x + '" y2="' + (70 + h) +
+           '" stroke="' + (isCm ? '#8a8078' : '#c9bcae') + '" stroke-width="' + (isCm ? 1.8 : 1) + '"/>';
+      if (isCm){
+        s += '<text x="' + x + '" y="134" text-anchor="middle" font-size="11" fill="#8a8078">' + (i / 10) + '</text>';
+      }
+    }
+    ticks.innerHTML = s;
+  })();
+
+  function render(){
+    var mm = parseInt(mmR.value, 10);
+    var x = X0 + mm * PER;
+
+    mark.setAttribute('x1', x);
+    mark.setAttribute('x2', x);
+    markTxt.setAttribute('x', x);
+    markTxt.textContent = mm + ' 毫米';
+
+    var cm = Math.floor(mm / 10);
+    var rest = mm % 10;
+
+    if (mm === 0){
+      eq.innerHTML = '还没量';
+      say.innerHTML = '拖动滑块，让红线走到你要的位置。';
+      return;
+    }
+
+    if (rest === 0){
+      eq.innerHTML = '<span class="u">' + cm + ' 厘米</span> ＝ <b>' + mm + '</b> 毫米';
+      say.innerHTML = '正好落在 ' + cm + ' 厘米的刻度上。';
+    } else {
+      eq.innerHTML = '<span class="u">' + cm + ' 厘米 ' + rest + ' 毫米</span> ＝ ' +
+                     cm + ' × 10 ＋ ' + rest + ' ＝ <b>' + mm + '</b> 毫米';
+      say.innerHTML = '过了 ' + cm + ' 厘米，又多出 ' + rest + ' 小格，每小格 1 毫米。';
+    }
+  }
+
+  mmR.addEventListener('input', render);
+  render();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'1 厘米等于多少毫米？', opts:['10 毫米','100 毫米','1000 毫米'], a:0,
+      why:'尺子上 1 厘米之间分成 10 小格，每小格 1 毫米。' },
+    { q:'5 分米等于多少厘米？', opts:['5 厘米','50 厘米','500 厘米'], a:1,
+      why:'1 分米 ＝ 10 厘米，5 分米 ＝ 5 × 10 ＝ 50 厘米。' },
+    { q:'1 千米等于多少米？', opts:['10 米','100 米','1000 米'], a:2,
+      why:'千米和米之间是 1000 倍，不是 10 倍，这里最容易错。' },
+    { q:'3 厘米 5 毫米等于多少毫米？', opts:['35 毫米','8 毫米','305 毫米'], a:0,
+      why:'3 厘米 ＝ 30 毫米，再加 5 毫米，等于 35 毫米。' },
+    { q:'一支铅笔长约 18（　）。', opts:['毫米','厘米','米'], a:1,
+      why:'18 毫米太短（不到 2 厘米），18 米太长，18 厘米正好。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

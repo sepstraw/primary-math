@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第七单元 · 线和角 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+  .svg-lb{font-size:14px;fill:#9a8f85}
+
+  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 0}
+  .btn{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:8px 20px;background:var(--accent);border:0;color:#fff;font-weight:600}
+  .btn:hover{background:#d5781f}
+  .btn.ghost{background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  .readout{display:flex;align-items:center;gap:12px;margin:14px 0 0;justify-content:center;font-variant-numeric:tabular-nums}
+  .readout .deg{font-size:32px;font-weight:800;min-width:96px;text-align:center}
+  .badge{font-size:14px;font-weight:700;padding:3px 12px;border-radius:999px;background:#f1e9df;color:#8a8078}
+  .badge.acute{background:#e7f4ec;color:var(--green)}
+  .badge.right{background:#e8effb;color:#3f6fc4}
+  .badge.obtuse{background:#fbeaea;color:var(--red)}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .readout .deg{font-size:28px;min-width:80px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级上册</a> ／ 第七单元</p>
+  <h1>第七单元 · 线和角</h1>
+  <p class="sub">📏 线段、射线、直线，还有角</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>三种线，差在端点上</h2>
+    <p class="lead">端点就是「到此为止」的那个点。有几个端点，决定它能不能延长。</p>
+    <ul class="fact">
+      <li><b>线段</b>：两个端点，不能延长，能量长度</li>
+      <li><b>射线</b>：一个端点，可以往一头无限延长</li>
+      <li><b>直线</b>：没有端点，两头都能无限延长</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>延长试试</h2>
+    <p class="lead">点按钮把端点「打开」，看它变成什么。</p>
+
+    <svg id="lineBox" viewBox="0 0 420 140" role="img" aria-label="线段、射线、直线">
+      <line id="seg" y1="70" y2="70" stroke="#e8862e" stroke-width="5" stroke-linecap="round"></line>
+      <circle id="dotL" cy="70" r="7" fill="#3b3631"></circle>
+      <circle id="dotR" cy="70" r="7" fill="#3b3631"></circle>
+      <text id="name" x="210" y="120" text-anchor="middle" font-size="16" font-weight="700" fill="#c9761f"></text>
+      <text id="desc" x="210" y="30" text-anchor="middle" class="svg-lb"></text>
+    </svg>
+
+    <div class="row">
+      <button class="btn" id="openL" type="button">打开左端</button>
+      <button class="btn" id="openR" type="button">打开右端</button>
+      <button class="btn ghost" id="reset" type="button">重新画</button>
+    </div>
+
+    <p class="hint">箭头表示「可以一直延下去」，不是图形的一部分。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>角：从一点引出两条射线</h2>
+    <p class="lead">拖动画面，改变角张开的大小。</p>
+
+    <svg id="lab" viewBox="0 0 420 260" role="img" aria-label="可以拖动的角" tabindex="0">
+      <path id="arc" fill="none" stroke="#e8862e" stroke-width="3" stroke-linecap="round" opacity=".85"></path>
+      <line id="lbase" stroke="#3b3631" stroke-width="4" stroke-linecap="round"></line>
+      <line id="lmove" stroke="#e8862e" stroke-width="4" stroke-linecap="round"></line>
+      <circle id="vtx" r="7" fill="#3b3631"></circle>
+      <circle id="handle" r="12" fill="#e8862e" fill-opacity=".16" stroke="#e8862e" stroke-width="2"></circle>
+      <text id="degSvg" text-anchor="middle" font-size="20" font-weight="700" fill="#c9761f"></text>
+      <text id="lbV" class="svg-lb">顶点</text>
+      <text id="lbB" class="svg-lb">边</text>
+      <text id="lbM" class="svg-lb">边</text>
+    </svg>
+
+    <div class="readout">
+      <span class="deg" id="deg">60°</span>
+      <span class="badge acute" id="kind">锐角</span>
+    </div>
+
+    <p class="hint">角的大小只看两条边张开多大，和边画多长没关系。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第六单元-数字编码/index.html">← 第六单元 · 数字编码</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第八单元-分数的初步认识/index.html">第八单元 · 分数的初步认识 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ========== 线段 / 射线 / 直线 ========== */
+  var L0 = 60, R0 = 360, EDGE_L = 12, EDGE_R = 408;
+  var leftOpen = false, rightOpen = false;
+
+  var seg = document.getElementById('seg');
+  var dotL = document.getElementById('dotL');
+  var dotR = document.getElementById('dotR');
+  var nameEl = document.getElementById('name');
+  var descEl = document.getElementById('desc');
+
+  function renderLine(){
+    var x1 = leftOpen ? EDGE_L : L0;
+    var x2 = rightOpen ? EDGE_R : R0;
+
+    seg.setAttribute('x1', x1);
+    seg.setAttribute('x2', x2);
+
+    dotL.style.display = leftOpen ? 'none' : '';
+    dotL.setAttribute('cx', L0);
+
+    dotR.style.display = rightOpen ? 'none' : '';
+    dotR.setAttribute('cx', R0);
+
+    if (!leftOpen && !rightOpen){
+      nameEl.textContent = '线段';
+      descEl.textContent = '两个端点，长度有限，可以量出来';
+    } else if ((!leftOpen && rightOpen) || (leftOpen && !rightOpen)){
+      nameEl.textContent = '射线';
+      descEl.textContent = '一个端点，另一头可以无限延长';
+    } else {
+      nameEl.textContent = '直线';
+      descEl.textContent = '没有端点，两头都能无限延长';
+    }
+  }
+
+  document.getElementById('openL').addEventListener('click', function(){ leftOpen = true; renderLine(); });
+  document.getElementById('openR').addEventListener('click', function(){ rightOpen = true; renderLine(); });
+  document.getElementById('reset').addEventListener('click', function(){ leftOpen = false; rightOpen = false; renderLine(); });
+  renderLine();
+
+  /* ========== 角 ========== */
+  var V = {x: 210, y: 210};
+  var MIN = 5, MAX = 175;
+  var theta = 60;
+  var LEN = 130;
+
+  var lab = document.getElementById('lab');
+  var arc = document.getElementById('arc');
+  var lbase = document.getElementById('lbase');
+  var lmove = document.getElementById('lmove');
+  var handle = document.getElementById('handle');
+  var degSvg = document.getElementById('degSvg');
+  var deg = document.getElementById('deg');
+  var kind = document.getElementById('kind');
+  var lbV = document.getElementById('lbV');
+  var lbB = document.getElementById('lbB');
+  var lbM = document.getElementById('lbM');
+
+  function pt(a, len){
+    var r = a * Math.PI / 180;
+    return { x: V.x + Math.cos(r) * len, y: V.y - Math.sin(r) * len };
+  }
+
+  function renderAngle(){
+    var b = pt(0, LEN), m = pt(theta, LEN);
+
+    lbase.setAttribute('x1', V.x); lbase.setAttribute('y1', V.y);
+    lbase.setAttribute('x2', b.x); lbase.setAttribute('y2', b.y);
+    lmove.setAttribute('x1', V.x); lmove.setAttribute('y1', V.y);
+    lmove.setAttribute('x2', m.x); lmove.setAttribute('y2', m.y);
+
+    var R = 58;
+    var s = pt(0, R), e = pt(theta, R);
+    arc.setAttribute('d', 'M ' + s.x + ' ' + s.y + ' A ' + R + ' ' + R + ' 0 0 0 ' + e.x + ' ' + e.y);
+
+    handle.setAttribute('cx', m.x); handle.setAttribute('cy', m.y);
+
+    var mid = pt(theta / 2, R + 28);
+    degSvg.setAttribute('x', mid.x);
+    degSvg.setAttribute('y', Math.min(mid.y, V.y - 26));
+    degSvg.textContent = Math.round(theta) + '°';
+
+    deg.textContent = Math.round(theta) + '°';
+    var a = Math.round(theta);
+    if (a < 90){ kind.textContent = '锐角'; kind.className = 'badge acute'; }
+    else if (a === 90){ kind.textContent = '直角'; kind.className = 'badge right'; }
+    else { kind.textContent = '钝角'; kind.className = 'badge obtuse'; }
+
+    lbV.setAttribute('x', V.x + 12);
+    lbV.setAttribute('y', V.y + 22);
+    lbB.setAttribute('x', V.x + LEN * 0.62);
+    lbB.setAttribute('y', V.y - 10);
+    var nx = Math.cos(theta * Math.PI / 180), ny = -Math.sin(theta * Math.PI / 180);
+    var mp = pt(theta, LEN * 0.62);
+    lbM.setAttribute('x', (mp.x + ny * 16).toFixed(1));
+    lbM.setAttribute('y', Math.min(mp.y - nx * 16, V.y - 12).toFixed(1));
+  }
+
+  function clampAngle(a){
+    a = Math.max(MIN, Math.min(MAX, a));
+    if (Math.abs(a - 90) <= 2) a = 90;
+    return a;
+  }
+
+  function angleAt(ev){
+    var r = lab.getBoundingClientRect();
+    var x = (ev.clientX - r.left) / r.width * 420;
+    var y = (ev.clientY - r.top) / r.height * 260;
+    var dx = x - V.x, dy = V.y - y;
+    if (Math.sqrt(dx * dx + dy * dy) < 20) return null;
+    var a = Math.atan2(dy, dx) * 180 / Math.PI;
+    if (a < 0) a = 0;
+    return clampAngle(a);
+  }
+
+  var dragging = false;
+  lab.addEventListener('pointerdown', function(ev){
+    var a = angleAt(ev);
+    if (a === null) return;
+    dragging = true; theta = a; renderAngle();
+    if (lab.setPointerCapture){ try { lab.setPointerCapture(ev.pointerId); } catch(e){} }
+    ev.preventDefault();
+  });
+  lab.addEventListener('pointermove', function(ev){
+    if (!dragging) return;
+    var a = angleAt(ev);
+    if (a === null) return;
+    theta = a; renderAngle(); ev.preventDefault();
+  });
+  function endDrag(){ dragging = false; }
+  lab.addEventListener('pointerup', endDrag);
+  lab.addEventListener('pointercancel', endDrag);
+  lab.addEventListener('lostpointercapture', endDrag);
+
+  renderAngle();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'线段有几个端点？', opts:['0 个','1 个','2 个'], a:2,
+      why:'线段有两个端点，所以能量出长度。' },
+    { q:'可以往一头无限延长的线叫（　）。', opts:['线段','射线','直线'], a:1,
+      why:'只有一个端点、能往一头无限延长的是射线。' },
+    { q:'直线有几个端点？', opts:['0 个','1 个','2 个'], a:0,
+      why:'直线没有端点，两头都能无限延长。' },
+    { q:'角是由（　）组成的。', opts:['两条线段','从一点引出的两条射线','两条直线'], a:1,
+      why:'角由一个顶点和从这点引出的两条射线组成。' },
+    { q:'比直角大、比平角小的角叫（　）。', opts:['锐角','钝角','直角'], a:1,
+      why:'比 90° 大、比 180° 小的是钝角。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第八单元 · 数学广角——搭配（二） | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+
+  .group{margin:0 0 14px}
+  .glabel{font-size:13px;color:var(--muted);margin:0 0 6px}
+  .pick{display:flex;gap:10px;flex-wrap:wrap}
+  .pick button{
+    font:inherit;font-size:14px;cursor:pointer;border-radius:14px;padding:10px 16px;
+    background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);transition:.15s;
+    display:flex;align-items:center;gap:8px;
+  }
+  .pick button .em{font-size:20px;line-height:1}
+  .pick button:hover{border-color:var(--accent)}
+  .pick button.on{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px #f7e0c7}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 0;min-height:84px}
+  .slot{
+    border:1.5px dashed #e0d3c2;border-radius:12px;min-height:78px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;color:#c9bcae;text-align:center;padding:6px;
+  }
+  .slot.filled{
+    border-style:solid;border-color:#e9dbc9;background:#fdfaf6;color:var(--ink);
+    flex-direction:column;gap:2px;
+  }
+  .slot.filled .em{font-size:20px;line-height:1.1}
+  .slot.filled .nm{font-size:12px;color:#5d534a}
+
+  .count{text-align:center;font-size:15px;margin:16px 0 0;color:var(--muted)}
+  .count b{color:var(--accent);font-size:20px}
+  .msg{text-align:center;font-size:14px;min-height:26px;margin:6px 0 0;color:var(--muted)}
+  .msg.ok{color:var(--green);font-weight:700}
+
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 0}
+  .nums div{background:#fdf6ee;border-radius:12px;padding:10px;text-align:center;font-size:22px;font-weight:800;color:#c9761c;font-variant-numeric:tabular-nums}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){
+    h1{font-size:25px} .card{padding:18px}
+    .cards{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级上册</a> ／ 第十单元</p>
+  <h1>第十单元 · 数学广角——搭配问题</h1>
+  <p class="sub">👕 一件上衣配一条裤子，能配出几种</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>什么叫一种搭配</h2>
+    <p class="lead">上衣换一件、或者裤子换一条，就是新的一种。</p>
+    <ul class="fact">
+      <li>2 件上衣、3 条裤子</li>
+      <li>每次只能选 <b>1 件上衣 ＋ 1 条裤子</b></li>
+      <li>两次选的完全一样，算同一种</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>全部配出来</h2>
+    <p class="lead">先点一件上衣，再点一条裤子。配过的不能再算一次。</p>
+
+    <div class="group">
+      <p class="glabel">选上衣</p>
+      <div class="pick" id="tops"></div>
+    </div>
+    <div class="group">
+      <p class="glabel">选下装</p>
+      <div class="pick" id="bottoms"></div>
+    </div>
+
+    <div class="cards" id="cards"></div>
+
+    <p class="count">已经配出 <b id="cnt">0</b> / 6 种</p>
+    <p class="msg" id="msg"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>为什么正好是 6 种</h2>
+    <p class="lead">不用一个一个数，用乘法更快。</p>
+    <ul class="fact">
+      <li>红色上衣：能配 3 条裤子 → <b>3 种</b></li>
+      <li>蓝色上衣：也能配 3 条裤子 → <b>3 种</b></li>
+      <li>一共 <b>2 个 3</b>，就是 2 × 3 ＝ 6 种</li>
+    </ul>
+    <p class="conclusion">只要两样东西各选一个，就把它们的<b>数量相乘</b>。3 件上衣配 4 条裤子，就是 3 × 4 ＝ 12 种。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>换一道：用数字组数</h2>
+    <p class="lead">用 1、3、5 组成两位数（每个数只用一次）。</p>
+
+    <div class="nums">
+      <div>13</div><div>15</div><div>31</div>
+      <div>35</div><div>51</div><div>53</div>
+    </div>
+
+    <p class="conclusion">十位有 <b>3</b> 种选法，个位还剩 <b>2</b> 种，所以 3 × 2 ＝ <b>6</b> 个。<br>按顺序一个个来，才不会漏、也不会重复。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">5</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第九单元-复习与关联/index.html">← 第九单元 · 复习与关联</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var TOPS = [
+    { n:'红色上衣', e:'👕', c:'#d05353' },
+    { n:'蓝色上衣', e:'👕', c:'#4a7fd4' }
+  ];
+  var BOTS = [
+    { n:'长裤', e:'👖', c:'#6b7280' },
+    { n:'短裤', e:'🩳', c:'#2f9e68' },
+    { n:'裙子', e:'👗', c:'#b76fc4' }
+  ];
+
+  var topsBox = document.getElementById('tops');
+  var botsBox = document.getElementById('bottoms');
+  var cardsBox = document.getElementById('cards');
+  var cntEl = document.getElementById('cnt');
+  var msg = document.getElementById('msg');
+
+  var selT = -1, selB = -1;
+  var made = {};
+
+  function buildPicker(box, list, which){
+    list.forEach(function(it, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.innerHTML = '<span class="em">' + it.e + '</span>' +
+                    '<span class="dot" style="display:inline-block;width:10px;height:10px;border-radius:3px;background:' + it.c + '"></span>' +
+                    it.n;
+      b.addEventListener('click', function(){
+        if (which === 't'){
+          selT = i;
+          Array.prototype.forEach.call(topsBox.children, function(c, j){
+            c.className = (j === i) ? 'on' : '';
+          });
+        } else {
+          selB = i;
+          Array.prototype.forEach.call(botsBox.children, function(c, j){
+            c.className = (j === i) ? 'on' : '';
+          });
+        }
+        tryAdd();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  buildPicker(topsBox, TOPS, 't');
+  buildPicker(botsBox, BOTS, 'b');
+
+  function resetSlots(){
+    cardsBox.innerHTML = '';
+    for (var i = 0; i < 6; i++){
+      var d = document.createElement('div');
+      d.className = 'slot';
+      d.textContent = '待配';
+      cardsBox.appendChild(d);
+    }
+  }
+  resetSlots();
+
+  function tryAdd(){
+    if (selT < 0 || selB < 0) return;
+    var key = selT + '-' + selB;
+    var t = TOPS[selT], b = BOTS[selB];
+
+    if (made[key]){
+      msg.className = 'msg';
+      msg.textContent = '「' + t.n + ' ＋ ' + b.n + '」已经配过了，换一个试试。';
+    } else {
+      made[key] = true;
+      var slot = cardsBox.children[Object.keys(made).length - 1];
+      slot.className = 'slot filled';
+      slot.innerHTML = '<span class="em">' + t.e + '＋' + b.e + '</span>' +
+                       '<span class="nm">' + t.n.slice(0, 2) + ' · ' + b.n + '</span>';
+      var n = Object.keys(made).length;
+      cntEl.textContent = n;
+      msg.className = 'msg';
+      msg.textContent = '记下了：' + t.n + ' ＋ ' + b.n + '。';
+      if (n === 6){
+        msg.className = 'msg ok';
+        msg.textContent = '🎉 6 种全配出来了！2 件上衣 × 每条 3 种 = 6。';
+      }
+    }
+
+    selT = -1; selB = -1;
+    Array.prototype.forEach.call(topsBox.children, function(c){ c.className = ''; });
+    Array.prototype.forEach.call(botsBox.children, function(c){ c.className = ''; });
+  }
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'2 件上衣配 3 条裤子，一共有几种搭配？',
+      opts:['5 种','6 种','8 种'], a:1,
+      why:'每件上衣配 3 条，2 件就是 2 个 3：2 × 3 ＝ 6（种）。' },
+    { q:'3 件上衣配 4 条裤子，一共有几种搭配？',
+      opts:['7 种','12 种','9 种'], a:1,
+      why:'3 × 4 ＝ 12（种）。两样各选一个，就把数量相乘。' },
+    { q:'用 1、2、3 组成两位数（每个数只用一次），能组成几个？',
+      opts:['3 个','6 个','9 个'], a:1,
+      why:'十位 3 种、个位剩 2 种：3 × 2 ＝ 6（个）。' },
+    { q:'从甲地到乙地有 2 条路，从乙地到丙地有 3 条路，从甲到丙共有几种走法？',
+      opts:['5 种','6 种','3 种'], a:1,
+      why:'先选甲到乙的一条（2 种），再选乙到丙的一条（3 种）：2 × 3 ＝ 6（种）。' },
+    { q:'要想搭配时不重复、不遗漏，最可靠的办法是（　）。',
+      opts:['随便配','按顺序一个一个来','只配顺眼的'], a:1,
+      why:'先固定一件上衣，把它的所有搭配配完，再换下一件——有顺序就不会乱。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

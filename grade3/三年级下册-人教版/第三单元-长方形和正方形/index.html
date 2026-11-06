@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第三单元 · 长方形和正方形 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .ctrl{display:flex;align-items:center;gap:12px;margin:14px 0 0;flex-wrap:wrap}
+  .ctrl label{font-size:14px;color:var(--muted);width:42px;flex:none}
+  .ctrl .val{font-size:15px;font-weight:700;width:58px;flex:none;font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1 1 140px;height:6px;border-radius:6px;background:#f0e3d3;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 1px 4px rgba(180,110,40,.35);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;cursor:pointer}
+
+  .eq{margin:16px 0 0;text-align:center;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.5px}
+  .eq .u{color:var(--accent)}
+  .eq b{color:var(--blue)}
+  .say{margin:8px 0 0;text-align:center;font-size:14px;color:var(--muted)}
+
+  .tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+  .tabs button{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:6px 16px;background:#fff;border:1.5px solid #e9dbc9;color:var(--muted);transition:.15s;font-variant-numeric:tabular-nums}
+  .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:#b96a1c;font-weight:700}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .eq{font-size:19px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级下册</a> ／ 第三单元</p>
+  <h1>第三单元 · 长方形和正方形</h1>
+  <p class="sub">⬛ 认识长方形，学会算周长</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>先看它们的脾气</h2>
+    <p class="lead">长方形和正方形，都是「四个直角」，区别在边上。</p>
+    <ul class="fact">
+      <li>长方形：<b>对边相等</b>，四个角都是直角</li>
+      <li>正方形：<b>四条边都相等</b>，四个角都是直角</li>
+      <li>正方形是特殊的 <b>长方形</b></li>
+      <li>周长 = 绕一圈的长度</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>拖一拖，周长怎么变</h2>
+    <p class="lead">改长和宽，看周长跟着变。</p>
+
+    <svg id="shape" viewBox="0 0 420 320" role="img" aria-label="可以改变长宽的长方形">
+      <rect id="rect" fill="#fdf1e4" stroke="#e8862e" stroke-width="3"></rect>
+      <text id="lw" text-anchor="middle" font-size="15" font-weight="700" fill="#c9761f"></text>
+      <text id="lh" text-anchor="middle" font-size="15" font-weight="700" fill="#c9761f"></text>
+    </svg>
+
+    <div class="ctrl">
+      <label for="rw">长</label>
+      <input id="rw" type="range" min="2" max="10" value="6">
+      <span class="val" id="rwv">6 厘米</span>
+    </div>
+    <div class="ctrl">
+      <label for="rh">宽</label>
+      <input id="rh" type="range" min="2" max="10" value="4">
+      <span class="val" id="rhv">4 厘米</span>
+    </div>
+
+    <p class="eq" id="eq"></p>
+    <p class="say" id="say"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>周长一样，形状能不同吗</h2>
+    <p class="lead">下面四个图形，周长都是 16 厘米。</p>
+
+    <div class="tabs" id="tabs"></div>
+
+    <svg id="board" viewBox="0 0 260 220" role="img" aria-label="周长相同的不同形状">
+      <rect id="brect" fill="#e8effb" stroke="#4a7fd4" stroke-width="3"></rect>
+      <text id="btxt" text-anchor="middle" font-size="15" font-weight="700" fill="#3f6fc4"></text>
+    </svg>
+
+    <p class="conclusion" id="bnote"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题，公式要会用，也要会倒着想。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第二单元-除数是一位数的除法/index.html">← 第二单元 · 除数是一位数的除法</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第四单元-图形的面积/index.html">第四单元 · 图形的面积 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ========== 可拖的长方形 ========== */
+  var OX = 70, OY = 60, SCALE = 22;
+  var rect = document.getElementById('rect');
+  var lw = document.getElementById('lw');
+  var lh = document.getElementById('lh');
+  var rw = document.getElementById('rw');
+  var rh = document.getElementById('rh');
+  var rwv = document.getElementById('rwv');
+  var rhv = document.getElementById('rhv');
+  var eq = document.getElementById('eq');
+  var say = document.getElementById('say');
+
+  function render(){
+    var w = parseInt(rw.value, 10);
+    var h = parseInt(rh.value, 10);
+    var W = w * SCALE, H = h * SCALE;
+
+    rect.setAttribute('x', OX);
+    rect.setAttribute('y', OY);
+    rect.setAttribute('width', W);
+    rect.setAttribute('height', H);
+
+    lw.setAttribute('x', OX + W / 2);
+    lw.setAttribute('y', OY - 12);
+    lw.textContent = w + ' 厘米';
+
+    lh.setAttribute('x', OX - 12);
+    lh.setAttribute('y', OY + H / 2);
+    lh.setAttribute('transform', 'rotate(-90 ' + (OX - 12) + ' ' + (OY + H / 2) + ')');
+    lh.textContent = h + ' 厘米';
+
+    rwv.textContent = w + ' 厘米';
+    rhv.textContent = h + ' 厘米';
+
+    var p = (w + h) * 2;
+    if (w === h){
+      eq.innerHTML = '周长 ＝ ' + w + ' × 4 ＝ <b>' + p + '</b> 厘米';
+      say.innerHTML = '长和宽一样长，这其实是<b>正方形</b>，用「边长 × 4」更快。';
+    } else {
+      eq.innerHTML = '周长 ＝ (' + w + ' ＋ ' + h + ') × 2 ＝ <b>' + p + '</b> 厘米';
+      say.innerHTML = '绕一圈：' + w + ' ＋ ' + h + ' ＋ ' + w + ' ＋ ' + h + '。';
+    }
+  }
+  rw.addEventListener('input', render);
+  rh.addEventListener('input', render);
+  render();
+
+  /* ========== 周长 16 的四种形状 ========== */
+  var SHAPES = [ {w:1,h:7}, {w:2,h:6}, {w:3,h:5}, {w:4,h:4} ];
+  var curS = 0;
+  var tabs = document.getElementById('tabs');
+  var brect = document.getElementById('brect');
+  var btxt = document.getElementById('btxt');
+  var bnote = document.getElementById('bnote');
+
+  var BX = 40, BY = 40, BS = 20;
+
+  SHAPES.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = s.w + ' × ' + s.h;
+    b.className = (i === 0) ? 'on' : '';
+    b.addEventListener('click', function(){
+      curS = i;
+      Array.prototype.forEach.call(tabs.children, function(c, j){
+        c.className = (j === i) ? 'on' : '';
+      });
+      renderShape();
+    });
+    tabs.appendChild(b);
+  });
+
+  function renderShape(){
+    var s = SHAPES[curS];
+    var W = s.w * BS, H = s.h * BS;
+    brect.setAttribute('x', BX);
+    brect.setAttribute('y', BY);
+    brect.setAttribute('width', W);
+    brect.setAttribute('height', H);
+    brect.setAttribute('fill', s.w === s.h ? '#e7f4ec' : '#e8effb');
+    brect.setAttribute('stroke', s.w === s.h ? '#2f9e68' : '#4a7fd4');
+
+    btxt.setAttribute('x', BX + W / 2);
+    btxt.setAttribute('y', BY + H / 2 + 6);
+    btxt.setAttribute('fill', s.w === s.h ? '#276c4a' : '#3f6fc4');
+    btxt.textContent = s.w + ' × ' + s.h;
+
+    if (s.w === s.h){
+      bnote.innerHTML = '4 × 4 时，长和宽一样了，它变成了<b>正方形</b>——周长还是 16 厘米。';
+    } else {
+      bnote.innerHTML = '周长都是 (' + s.w + ' ＋ ' + s.h + ') × 2 ＝ <b>16</b> 厘米，' +
+                        '可形状完全不同。所以<b>周长一样的图形，形状可以不一样</b>。';
+    }
+  }
+  renderShape();
+
+  /* ========== 练一练 ========== */
+    var QUIZ = [
+    { q:'长方形有几条边？对边有什么关系？',
+      opts:['4 条边，对边相等','4 条边，都相等','3 条边'], a:0,
+      why:'长方形有 4 条边，对边相等；4 条边都相等的是正方形。' },
+    { q:'一块长方形菜地，长 8 米、宽 5 米，围一圈篱笆要多少米？',
+      opts:['13 米','26 米','40 米'], a:1,
+      why:'求篱笆长就是求周长：(8 ＋ 5) × 2 ＝ 26（米）。' },
+    { q:'一个正方形手帕，边长 25 厘米，周长是多少？',
+      opts:['50 厘米','100 厘米','625 厘米'], a:1,
+      why:'25 × 4 ＝ 100（厘米）。' },
+    { q:'用一根 20 厘米长的铁丝围长方形，下面哪个围法可以？',
+      opts:['长 8 宽 2','长 6 宽 5','长 9 宽 3'], a:0,
+      why:'(8 ＋ 2) × 2 ＝ 20；另外两组分别是 22 和 24，都不够。' },
+    { q:'小明沿着边长 30 米的正方形操场跑一圈，跑了多少米？',
+      opts:['30 米','90 米','120 米'], a:2,
+      why:'30 × 4 ＝ 120（米）。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

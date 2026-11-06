@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第六单元 · 数字编码 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+
+  .digits{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:10px 0 0}
+  .dg{
+    width:26px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-family:"Consolas",monospace;font-size:17px;font-weight:700;
+    background:#fdf6ee;border:1.5px solid #e8dbc9;cursor:pointer;transition:.15s;
+  }
+  .dg:hover{transform:translateY(-2px)}
+  .dg.s1{background:#fde3c6;border-color:#e8862e;color:#b96a1c}
+  .dg.s2{background:#dbe7fa;border-color:#4a7fd4;color:#3f6fc4}
+  .dg.s3{background:#d5f0e0;border-color:#2f9e68;color:#276c4a}
+  .dg.s4{background:#fbdcdc;border-color:#d05353;color:#a33}
+
+  .segtitle{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:12px 0 0;font-size:12px;color:var(--muted)}
+  .segtitle span i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:middle}
+
+  .explain{
+    margin:14px 0 0;padding:12px 16px;border-radius:12px;background:#fdf6ee;
+    font-size:14px;min-height:52px;
+  }
+  .explain b{color:var(--accent)}
+
+  .post{font-family:"Consolas",monospace;font-size:30px;font-weight:700;letter-spacing:6px;text-align:center;margin:6px 0 0}
+
+  .builder{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 0}
+  .builder label{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+  .builder select{
+    font:inherit;font-size:15px;padding:6px 10px;border-radius:10px;border:1.5px solid #e9dbc9;background:#fff;color:var(--ink);
+  }
+  .code{
+    font-family:"Consolas",monospace;font-size:34px;font-weight:800;letter-spacing:3px;
+    text-align:center;color:var(--accent);margin:14px 0 0;font-variant-numeric:tabular-nums;
+  }
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){
+    h1{font-size:25px} .card{padding:18px}
+    .dg{width:22px;height:30px;font-size:15px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">人教版三年级上册</a> ／ 第六单元</p>
+  <h1>第六单元 · 数字编码</h1>
+  <p class="sub">🔢 一串数字，能装下很多信息</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>编码是什么</h2>
+    <p class="lead">用数字（或字母）按一定的规则代表信息，就叫编码。</p>
+    <ul class="fact">
+      <li>每几位代表一样东西，<b>位置不同，含义不同</b></li>
+      <li>规则是全国统一的，所以谁的号都能看懂</li>
+      <li>好处：短、唯一、机器能读</li>
+    </ul>
+    <p class="conclusion">编码不是乱编的：<b>先定规则，再填数字</b>。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>身份证号码：18 位，四段</h2>
+    <p class="lead">点任意一位数字，看它属于哪一段。</p>
+
+    <div class="digits" id="idDigits"></div>
+    <div class="segtitle">
+      <span><i style="background:#e8862e"></i>地址码（6 位）</span>
+      <span><i style="background:#4a7fd4"></i>出生日期（8 位）</span>
+      <span><i style="background:#2f9e68"></i>顺序码（3 位）</span>
+      <span><i style="background:#d05353"></i>校验码（1 位）</span>
+    </div>
+
+    <p class="explain" id="explain">点一位数字试试。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>邮政编码：6 位，也是分段</h2>
+    <p class="post">2 1 0 0 0 0</p>
+    <ul class="fact" style="margin-top:12px">
+      <li>前 <b>2</b> 位：省（直辖市、自治区）</li>
+      <li>第 <b>3</b> 位：邮区</li>
+      <li>第 <b>4</b> 位：县、市</li>
+      <li>后 <b>2</b> 位：投递局</li>
+    </ul>
+    <p class="conclusion">越靠前的位，管的地方越大；越靠后，管得越细——<b>编码都是「从大到小」排的</b>。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>给同学编个学号</h2>
+    <p class="lead">规则：入学年份（4 位）＋ 班级（2 位）＋ 序号（2 位）。</p>
+
+    <div class="builder">
+      <label>入学年份
+        <select id="year">
+          <option>2023</option><option selected>2024</option><option>2025</option><option>2026</option>
+        </select>
+      </label>
+      <label>班级
+        <select id="cls">
+          <option value="1">1 班</option><option value="2">2 班</option><option value="3" selected>3 班</option>
+          <option value="4">4 班</option><option value="5">5 班</option>
+        </select>
+      </label>
+      <label>序号
+        <select id="no">
+          <option value="7">7 号</option><option value="25" selected>25 号</option><option value="8">8 号</option>
+        </select>
+      </label>
+    </div>
+
+    <p class="code" id="code">20240325</p>
+    <p class="hint" id="codeHint"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">5</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第五单元-多位数乘一位数/index.html">← 第五单元 · 多位数乘一位数</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <span class="ghost" style="font-size:14px;color:#b8ada2;padding:9px 0">第七单元 · 线和角（即将上线）</span>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ========== 身份证 ========== */
+  var ID = '320106201503121285';
+  var SEGS = [
+    { from: 0, to: 5,  cls: 's1', title: '地址码',
+      text: '前 6 位是<b>地址码</b>：320106 表示这个人在哪个省、市、区登记户口。' },
+    { from: 6, to: 13, cls: 's2', title: '出生日期',
+      text: '第 7 到 14 位是<b>出生日期码</b>：20150312 就是 2015 年 3 月 12 日出生。' },
+    { from: 14, to: 16, cls: 's3', title: '顺序码',
+      text: '第 15 到 17 位是<b>顺序码</b>：同一天在同一地方出生的人靠它区分；<b>第 17 位单数是男，双数是女</b>。' },
+    { from: 17, to: 17, cls: 's4', title: '校验码',
+      text: '最后 1 位是<b>校验码</b>：用前面 17 位按公式算出来的，用来检查号码有没有抄错。' }
+  ];
+
+  var box = document.getElementById('idDigits');
+  var explain = document.getElementById('explain');
+
+  function segOf(i){
+    for (var k = 0; k < SEGS.length; k++){
+      if (i >= SEGS[k].from && i <= SEGS[k].to) return { seg: SEGS[k], idx: k };
+    }
+    return null;
+  }
+
+  for (var i = 0; i < ID.length; i++){
+    var d = document.createElement('div');
+    d.className = 'dg';
+    d.textContent = ID[i];
+    (function(idx){
+      d.addEventListener('click', function(){
+        var r = segOf(idx);
+        Array.prototype.forEach.call(box.children, function(c, j){
+          var rr = segOf(j);
+          c.className = 'dg' + (j >= r.seg.from && j <= r.seg.to ? ' ' + r.seg.cls : '');
+        });
+        explain.innerHTML = '<b>' + r.seg.title + '</b>：' + r.seg.text +
+                            '<br><span style="color:#8a8078">你点的是第 ' + (idx + 1) + ' 位「' + ID[idx] + '」。</span>';
+      });
+    })(i);
+    box.appendChild(d);
+  }
+
+  /* ========== 学号 ========== */
+  var yEl = document.getElementById('year');
+  var cEl = document.getElementById('cls');
+  var nEl = document.getElementById('no');
+  var codeEl = document.getElementById('code');
+  var codeHint = document.getElementById('codeHint');
+
+  function two(v){ return ('0' + v).slice(-2); }
+
+  function renderCode(){
+    var y = yEl.value;
+    var c = two(cEl.value);
+    var n = two(nEl.value);
+    codeEl.textContent = y + c + n;
+    codeHint.textContent = y + ' 是入学年份，' + c + ' 是班级，' + n + ' 是序号——八位数字，一个同学。';
+  }
+
+  yEl.addEventListener('change', renderCode);
+  cEl.addEventListener('change', renderCode);
+  nEl.addEventListener('change', renderCode);
+  renderCode();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'邮政编码一共有几位？', opts:['4 位','6 位','18 位'], a:1,
+      why:'我国的邮政编码是 6 位。' },
+    { q:'身份证号码一共有几位？', opts:['6 位','15 位','18 位'], a:2,
+      why:'现在使用的身份证号码是 18 位。' },
+    { q:'身份证号码的第 7 到 14 位表示（　）。',
+      opts:['出生日期','家庭住址','性别'], a:0,
+      why:'20150312 这样的 8 位，就是出生的年月日。' },
+    { q:'身份证号码第 17 位是单数，表示这个人（　）。',
+      opts:['男性','女性','看不出来'], a:0,
+      why:'第 17 位单数是男，双数是女。' },
+    { q:'编码时为什么要先定规则？',
+      opts:['好看','这样每个人编出来的号含义一样，别人也能看懂','省纸'], a:1,
+      why:'编码的价值就在于大家都按同一个规则读，否则数字没有意义。' }
+  ];
+
+  var qbox = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    qbox.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

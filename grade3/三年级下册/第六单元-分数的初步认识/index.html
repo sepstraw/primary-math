@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第十单元 · 分数的初步认识 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+  .tabs button{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:6px 16px;background:#fff;border:1.5px solid #e9dbc9;color:var(--muted);transition:.15s}
+  .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:#b96a1c;font-weight:700}
+
+  .frac{display:inline-flex;flex-direction:column;align-items:center;line-height:1.15;vertical-align:middle;margin:0 4px}
+  .frac span{padding:0 8px;font-variant-numeric:tabular-nums}
+  .frac .top{border-bottom:2.5px solid currentColor;padding-bottom:1px;font-size:.62em}
+  .frac .bot{padding-top:1px;font-size:.62em}
+
+  .show{text-align:center;margin:16px 0 0;font-size:26px;font-weight:700;color:var(--accent)}
+  .read{text-align:center;font-size:15px;color:var(--muted);margin:6px 0 0}
+  .read b{color:var(--ink)}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .show{font-size:22px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级下册</a> ／ 第六单元</p>
+  <h1>第六单元 · 分数的初步认识</h1>
+  <p class="sub">🥧 平均分成几份，取其中的几份</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>先认识三个名字</h2>
+    <p class="lead">把一个饼平均分成 4 份，取其中 3 份，就是 <span class="frac" style="font-size:20px"><span class="top">3</span><span class="bot">4</span></span>。</p>
+    <ul class="fact">
+      <li>下面那个数叫 <b>分母</b>：平均分成几份</li>
+      <li>上面那个数叫 <b>分子</b>：取了其中几份</li>
+      <li>中间的横线叫 <b>分数线</b></li>
+    </ul>
+    <p class="conclusion">关键词是 <b>平均分</b>——每份一样大，才能用分数表示。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>切一块巧克力</h2>
+    <p class="lead">选份数，再点方块，看看凑出几分之几。</p>
+
+    <div class="tabs" id="parts"></div>
+
+    <svg id="choco" viewBox="0 0 420 200" role="img" aria-label="可以点选的巧克力">
+      <g id="squares"></g>
+    </svg>
+
+    <p class="show" id="show"></p>
+    <p class="read" id="read"></p>
+
+    <p class="hint">再点一下取消。全选就是「一整个」，也就是 1。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>份数越多，一份越小</h2>
+    <p class="lead">同样长的一条，涂一份，比一比谁大。</p>
+
+    <svg viewBox="0 0 400 270" role="img" aria-label="不同分母的分数比较">
+      <g id="wall"></g>
+    </svg>
+
+    <p class="conclusion">分子都是 <b>1</b> 的时候，分母越大，这一份就越小：<b>1/2 ＞ 1/3 ＞ 1/4 ＞ 1/6</b>。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../综合实践-寻找宝藏/index.html">← ☆ 寻找“宝藏”</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ========== 巧克力 ========== */
+  var PARTS = [2, 3, 4, 6, 8];
+  var n = 4;
+  var picked = [];
+
+  var partsBox = document.getElementById('parts');
+  var squares = document.getElementById('squares');
+  var show = document.getElementById('show');
+  var read = document.getElementById('read');
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var BX = 40, BY = 60, BW = 340, BH = 80;
+
+  var CN = ['零','一','二','三','四','五','六','七','八','九','十'];
+
+  function fracHTML(a, b){
+    return '<span class="frac"><span class="top">' + a + '</span><span class="bot">' + b + '</span></span>';
+  }
+
+  PARTS.forEach(function(k, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = '分 ' + k + ' 份';
+    b.className = (k === n) ? 'on' : '';
+    b.addEventListener('click', function(){
+      n = k;
+      picked = [];
+      Array.prototype.forEach.call(partsBox.children, function(c, j){
+        c.className = (j === i) ? 'on' : '';
+      });
+      draw();
+    });
+    partsBox.appendChild(b);
+  });
+
+  function draw(){
+    var w = BW / n;
+    squares.innerHTML = '';
+    picked = picked.filter(function(x){ return x < n; });
+
+    for (var i = 0; i < n; i++){
+      var r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', BX + i * w);
+      r.setAttribute('y', BY);
+      r.setAttribute('width', w - 2);
+      r.setAttribute('height', BH);
+      r.setAttribute('rx', 6);
+      r.setAttribute('fill', picked.indexOf(i) >= 0 ? '#e8862e' : '#f6ede1');
+      r.setAttribute('stroke', '#d9c4a8');
+      r.setAttribute('stroke-width', 1.5);
+      r.setAttribute('style', 'cursor:pointer');
+      (function(idx){
+        r.addEventListener('click', function(){
+          var p = picked.indexOf(idx);
+          if (p >= 0) picked.splice(p, 1);
+          else picked.push(idx);
+          draw();
+        });
+      })(i);
+      squares.appendChild(r);
+    }
+
+    var a = picked.length;
+    if (a === 0){
+      show.innerHTML = '还没选';
+      read.innerHTML = '点一块试试。';
+    } else if (a === n){
+      show.innerHTML = '1';
+      read.innerHTML = '全部选中，就是 <b>一整个</b>。';
+    } else {
+      show.innerHTML = fracHTML(a, n);
+      read.innerHTML = '读作 <b>' + CN[n] + '分之' + CN[a] + '</b>　·　平均分成 ' + n +
+                       ' 份，取了其中 ' + a + ' 份';
+    }
+  }
+
+  /* ========== 分数墙 ========== */
+  var WALL = [2, 3, 4, 6];
+  (function(){
+    var g = document.getElementById('wall');
+    var x0 = 70, w = 300, h = 34, gap = 58;
+
+    WALL.forEach(function(k, i){
+      var y = 20 + i * gap;
+      var seg = w / k;
+
+      for (var j = 0; j < k; j++){
+        var r = document.createElementNS(NS, 'rect');
+        r.setAttribute('x', x0 + j * seg);
+        r.setAttribute('y', y);
+        r.setAttribute('width', seg - 1.5);
+        r.setAttribute('height', h);
+        r.setAttribute('rx', 4);
+        r.setAttribute('fill', j === 0 ? '#e8862e' : '#f6ede1');
+        r.setAttribute('stroke', '#d9c4a8');
+        r.setAttribute('stroke-width', 1.2);
+        g.appendChild(r);
+      }
+
+      var t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', x0 - 12);
+      t.setAttribute('y', y + h / 2 + 5);
+      t.setAttribute('text-anchor', 'end');
+      t.setAttribute('font-size', '15');
+      t.setAttribute('font-weight', '700');
+      t.setAttribute('fill', '#c9761f');
+      t.textContent = '1/' + k;
+      g.appendChild(t);
+    });
+  })();
+
+  draw();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'把一个饼平均分成 4 份，每份是这个饼的几分之几？',
+      opts:['1/4','1/2','4/1'], a:0,
+      why:'平均分成 4 份，取 1 份，就是四分之一，写作 1/4。' },
+    { q:'一块蛋糕分成 5 份，取其中 2 份，用分数表示是（　）。',
+      opts:['2/5','5/2','2/3'], a:0,
+      why:'分母 5 表示分成 5 份，分子 2 表示取了 2 份。' },
+    { q:'1/2 和 1/4，哪个大？',
+      opts:['1/2','1/4','一样大'], a:0,
+      why:'同样大的一块，分成 2 份每份大，分成 4 份每份小。所以 1/2 ＞ 1/4。' },
+    { q:'3/4 读作（　）。',
+      opts:['四分之三','三分之四','三四分之'], a:0,
+      why:'先读分母，再读分子，读作四分之三。' },
+    { q:'分数 5/6 里，分母 6 表示（　）。',
+      opts:['平均分成 6 份','取了 6 份','一共有 6 个'], a:0,
+      why:'分母表示平均分成几份，分子表示取了其中几份。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

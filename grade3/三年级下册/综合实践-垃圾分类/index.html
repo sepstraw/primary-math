@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第七单元 · 垃圾分类中的数学问题 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+    --gray:#8a8078;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+
+  /* 四类 */
+  .kinds{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 4px}
+  .kind{border-radius:12px;padding:10px;font-size:13px;color:#4a423b;background:#fdf6ee;border:1.5px solid transparent}
+  .kind b{display:block;font-size:15px;margin-bottom:2px;color:var(--ink)}
+  .kind.k1{background:#e7f4ec;border-color:#bde3cd}
+  .kind.k2{background:#fdf1e4;border-color:#f6d3ab}
+  .kind.k3{background:#fbeaea;border-color:#f3cccc}
+  .kind.k4{background:#f2efea;border-color:#ded6cb}
+
+  /* 垃圾卡片 */
+  .items{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;min-height:52px}
+  .item{
+    font:inherit;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;border-radius:14px;
+    padding:8px 14px;display:flex;align-items:center;gap:8px;transition:.15s;
+  }
+  .item .em{font-size:22px;line-height:1}
+  .item .nm{font-size:13px;color:#5d534a}
+  .item:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .item.sel{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px #f7e0c7}
+  .item.done{display:none}
+
+  /* 桶 */
+  .buckets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .bucket{
+    cursor:pointer;border-radius:14px;padding:12px 10px;text-align:center;
+    border:2px dashed #ded6cb;background:#fdfcf9;transition:.15s;
+  }
+  .bucket:hover{border-color:var(--accent)}
+  .bucket .ic{font-size:24px;line-height:1.2}
+  .bucket .bn{font-size:13px;color:#5d534a}
+  .bucket .bc{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+  .bucket.b1 .bc{color:var(--green)}
+  .bucket.b2 .bc{color:var(--accent)}
+  .bucket.b3 .bc{color:var(--red)}
+  .bucket.b4 .bc{color:var(--gray)}
+  .bucket.b1.act{border-color:var(--green);background:#f1faf5}
+  .bucket.b2.act{border-color:var(--accent);background:#fff9f2}
+  .bucket.b3.act{border-color:var(--red);background:#fdf4f4}
+  .bucket.b4.act{border-color:var(--gray);background:#f8f6f2}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .bucket.shake{animation:shake .3s}
+
+  .fb{min-height:28px;margin:14px 0 0;font-size:14px;color:var(--muted)}
+  .fb.ok{color:var(--green);font-weight:600}
+  .fb.no{color:var(--red);font-weight:600}
+
+  /* 统计条 */
+  .stats{margin:18px 0 0}
+  .stat{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:13px;color:var(--muted)}
+  .stat .lbl{width:76px;flex:none;text-align:right}
+  .stat .bar{flex:1;height:14px;border-radius:7px;background:#f4ece2;overflow:hidden}
+  .stat .bar i{display:block;height:100%;border-radius:7px;transition:width .3s}
+  .stat .num{width:28px;flex:none;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+
+  /* 计算 */
+  .calc{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 10px}
+  .calc .big{font-size:34px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+  .calc .k{font-size:13px;color:var(--muted)}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:#f0e3d3;outline:none;margin:8px 0 0}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 1px 4px rgba(180,110,40,.35);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;cursor:pointer}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:640px){ .kinds,.buckets{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .calc .big{font-size:28px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级下册</a> ／ 综合实践</p>
+  <h1>☆ 垃圾分类中的数学问题</h1>
+  <p class="sub">♻️ 先分类，再数一数，最后算一算</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>四个桶，四类垃圾</h2>
+    <p class="lead">分类不是凭感觉，是有标准的。</p>
+    <div class="kinds">
+      <div class="kind k1"><b>可回收物</b>纸、塑料、金属、玻璃、织物</div>
+      <div class="kind k2"><b>厨余垃圾</b>剩菜、果皮、菜叶、骨头</div>
+      <div class="kind k3"><b>有害垃圾</b>电池、过期药品、灯管</div>
+      <div class="kind k4"><b>其他垃圾</b>纸巾、烟头、陶瓷碎片</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>把垃圾分一分</h2>
+    <p class="lead">先点一件垃圾，再点它该去的桶。</p>
+
+    <div class="items" id="items"></div>
+
+    <div class="buckets" id="buckets"></div>
+
+    <p class="fb" id="fb">还剩 10 件没分类。</p>
+
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>算一算：越攒越多</h2>
+    <p class="lead">拖一拖，看看一天的量攒起来有多大。</p>
+
+    <div class="calc">
+      <div>
+        <div class="k">我家一天产生</div>
+        <div class="big" id="perDay">2</div>
+        <div class="k">千克</div>
+      </div>
+      <div>
+        <div class="k">一周（7 天）</div>
+        <div class="big" id="week">14</div>
+        <div class="k">千克</div>
+      </div>
+      <div>
+        <div class="k">一年（365 天）</div>
+        <div class="big" id="year">730</div>
+        <div class="k">千克</div>
+      </div>
+    </div>
+
+    <input id="kg" type="range" min="1" max="10" value="2" aria-label="每天产生多少千克">
+
+    <p class="conclusion" id="bags">一年下来，大约装 146 袋（每袋 5 千克）。</p>
+
+    <p class="hint">一天看不出什么，一年就很吓人——这就是为什么要分类、要少用。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第四单元-统计表和条形统计图/index.html">← 第四单元 · 统计表和条形统计图（一）</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第五单元-长方形和正方形/index.html">第五单元 · 长方形和正方形 →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var KINDS = [
+    { id:'可回收', cls:'b1', emoji:'♻️' },
+    { id:'厨余',   cls:'b2', emoji:'🍂' },
+    { id:'有害',   cls:'b3', emoji:'☠️' },
+    { id:'其他',   cls:'b4', emoji:'🗑️' }
+  ];
+
+  var ITEMS = [
+    { e:'🍎', n:'苹果核',   t:'厨余' },
+    { e:'📰', n:'旧报纸',   t:'可回收' },
+    { e:'🔋', n:'废电池',   t:'有害' },
+    { e:'🥤', n:'塑料瓶',   t:'可回收' },
+    { e:'🍌', n:'香蕉皮',   t:'厨余' },
+    { e:'💊', n:'过期药品', t:'有害' },
+    { e:'📦', n:'纸箱',     t:'可回收' },
+    { e:'🥫', n:'易拉罐',   t:'可回收' },
+    { e:'🧻', n:'用过的纸巾', t:'其他' },
+    { e:'🪥', n:'旧牙刷',   t:'其他' }
+  ];
+
+  var counts = { '可回收':0, '厨余':0, '有害':0, '其他':0 };
+  var left = ITEMS.length;
+  var selected = -1;
+
+  var itemsBox = document.getElementById('items');
+  var bucketsBox = document.getElementById('buckets');
+  var fb = document.getElementById('fb');
+  var statsBox = document.getElementById('stats');
+
+  /* 垃圾卡片 */
+  ITEMS.forEach(function(it, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'item';
+    b.innerHTML = '<span class="em">' + it.e + '</span><span class="nm">' + it.n + '</span>';
+    b.addEventListener('click', function(){
+      selected = i;
+      Array.prototype.forEach.call(itemsBox.children, function(c, j){
+        c.className = 'item' + (j === i ? ' sel' : '');
+      });
+      fb.className = 'fb';
+      fb.textContent = '选中了「' + it.n + '」，它该去哪个桶？';
+    });
+    itemsBox.appendChild(b);
+  });
+
+  /* 四个桶 */
+  KINDS.forEach(function(k){
+    var d = document.createElement('div');
+    d.className = 'bucket ' + k.cls;
+    d.innerHTML = '<div class="ic">' + k.emoji + '</div>' +
+                  '<div class="bn">' + k.id + '垃圾</div>' +
+                  '<div class="bc" id="c-' + k.id + '">0</div>';
+    d.addEventListener('click', function(){
+      if (selected < 0){
+        fb.className = 'fb';
+        fb.textContent = '先点上面的一件垃圾，再点桶。';
+        return;
+      }
+      var it = ITEMS[selected];
+      if (it.t === k.id){
+        counts[k.id]++;
+        left--;
+        itemsBox.children[selected].className = 'item done';
+        selected = -1;
+        fb.className = 'fb ok';
+        if (left === 0){
+          fb.textContent = '🎉 全部分完！看看下面的条形，哪一类最多？';
+        } else {
+          fb.textContent = '✓ ' + it.n + ' 属于' + k.id + '垃圾，投对了！还剩 ' + left + ' 件。';
+        }
+      } else {
+        fb.className = 'fb no';
+        fb.textContent = '✗ ' + it.n + ' 不是' + k.id + '垃圾，再想想。';
+        d.classList.add('shake');
+        setTimeout(function(){ d.classList.remove('shake'); }, 320);
+      }
+      renderStats();
+    });
+    bucketsBox.appendChild(d);
+  });
+
+  function renderStats(){
+    KINDS.forEach(function(k){
+      document.getElementById('c-' + k.id).textContent = counts[k.id];
+    });
+
+    var total = 0, max = 1;
+    KINDS.forEach(function(k){
+      total += counts[k.id];
+      if (counts[k.id] > max) max = counts[k.id];
+    });
+
+    var colors = { '可回收':'#2f9e68', '厨余':'#e8862e', '有害':'#d05353', '其他':'#8a8078' };
+    var html = '<div class="stat" style="color:#8a8078"><span class="lbl">合计</span>' +
+               '<span class="bar"><i style="width:' + (total ? 100 : 0) + '%;background:#c9bcae"></i></span>' +
+               '<span class="num">' + total + '</span></div>';
+    KINDS.forEach(function(k){
+      var w = Math.round(counts[k.id] / max * 100);
+      html += '<div class="stat"><span class="lbl">' + k.id + '</span>' +
+              '<span class="bar"><i style="width:' + w + '%;background:' + colors[k.id] + '"></i></span>' +
+              '<span class="num">' + counts[k.id] + '</span></div>';
+    });
+    statsBox.innerHTML = html;
+  }
+  renderStats();
+
+  /* 算一算 */
+  var kg = document.getElementById('kg');
+  var perDay = document.getElementById('perDay');
+  var week = document.getElementById('week');
+  var year = document.getElementById('year');
+  var bags = document.getElementById('bags');
+
+  function renderCalc(){
+    var d = parseInt(kg.value, 10);
+    var w = d * 7, y = d * 365;
+    perDay.textContent = d;
+    week.textContent = w;
+    year.textContent = y;
+    bags.textContent = '一年下来，大约装 ' + Math.round(y / 5) + ' 袋（每袋 5 千克）。';
+  }
+  kg.addEventListener('input', renderCalc);
+  renderCalc();
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'废电池应该放进哪个桶？', opts:['可回收物','有害垃圾','其他垃圾'], a:1,
+      why:'电池里有重金属，会污染土壤和水，属于有害垃圾。' },
+    { q:'喝完的塑料瓶属于（　）。', opts:['可回收物','厨余垃圾','有害垃圾'], a:0,
+      why:'塑料可以回收再做成新的塑料制品。' },
+    { q:'每天产生 2 千克垃圾，一周（7 天）一共多少千克？',
+      opts:['9 千克','14 千克','20 千克'], a:1,
+      why:'2 × 7 ＝ 14（千克）。' },
+    { q:'每天产生 1 千克垃圾，一年（365 天）一共多少千克？',
+      opts:['36 千克','365 千克','3650 千克'], a:1,
+      why:'1 × 365 ＝ 365（千克），一个人一年就有这么多。' },
+    { q:'垃圾分类最主要的好处是（　）。',
+      opts:['让垃圾桶更好看','把有用的东西回收再利用','不用倒垃圾'], a:1,
+      why:'分类之后，可回收物能重新变成资源，有害垃圾也不会污染环境。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

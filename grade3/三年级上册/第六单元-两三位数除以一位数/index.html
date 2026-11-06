@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第四单元 · 两、三位数除以一位数 | 小学数学可视化</title>
+<style>
+  :root{
+    --paper:#fffaf3; --card:#ffffff; --ink:#2f2b28; --muted:#8a8078;
+    --line:#efe3d4; --accent:#e8862e; --accent-soft:#fdf1e4;
+    --green:#2f9e68; --red:#d05353; --blue:#4a7fd4; --blue-soft:#e8effb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .crumb{font-size:14px;color:var(--muted);margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:0 0 20px;box-shadow:0 1px 2px rgba(90,66,40,.04)}
+  .card h2{font-size:19px;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+  .fact{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .fact li{background:var(--accent-soft);border-radius:10px;padding:6px 12px;font-size:14px}
+  .fact b{color:var(--accent)}
+  svg{display:block;width:100%;height:auto;border-radius:14px;outline:none;background:linear-gradient(#fffdfa,#fff6ea)}
+  svg text{font-family:inherit}
+
+  .ctrl{display:flex;align-items:center;gap:12px;margin:14px 0 0;flex-wrap:wrap}
+  .ctrl label{font-size:14px;color:var(--muted);width:64px;flex:none}
+  .ctrl .val{font-size:15px;font-weight:700;width:40px;flex:none;font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1 1 140px;height:6px;border-radius:6px;background:#f0e3d3;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 1px 4px rgba(180,110,40,.35);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;cursor:pointer}
+
+  .eq{text-align:center;font-size:26px;font-weight:700;margin:16px 0 0;font-variant-numeric:tabular-nums}
+  .eq .u{color:var(--accent)}
+  .eq .r{color:var(--blue)}
+  .say{text-align:center;font-size:14px;color:var(--muted);margin:6px 0 0}
+
+  .steps{margin:6px 0 0}
+  .step{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);opacity:0;transition:opacity .3s}
+  .step.on{opacity:1}
+  .step:last-child{border-bottom:0}
+  .step .idx{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .step .txt{font-size:15px}
+  .step .txt b{color:var(--accent)}
+  .step .txt code{font-family:inherit;background:#fdf6ee;border-radius:6px;padding:1px 6px}
+
+  .btn{font:inherit;font-size:14px;cursor:pointer;border-radius:10px;padding:7px 18px;background:var(--accent);border:0;color:#fff;font-weight:600}
+  .btn:hover{background:#d5781f}
+  .btn.ghost{background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  .check{background:#fdf6ee;border-radius:14px;padding:16px 18px;font-size:16px;font-variant-numeric:tabular-nums;line-height:2}
+  .check b{color:var(--accent)}
+  .check .ok{color:var(--green);font-weight:700}
+
+  .conclusion{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:#e7f4ec;color:#276c4a;font-size:14px}
+  .conclusion b{color:var(--green)}
+  .hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+  .q{padding:16px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:0;padding-top:4px}
+  .q .stem{font-size:15px;margin:0 0 10px}
+  .q .stem .idx{color:var(--accent);font-weight:700;margin-right:6px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opts button{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1.5px solid #e9dbc9;color:var(--ink);border-radius:12px;padding:8px 18px;transition:.15s}
+  .opts button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opts button:disabled{cursor:default}
+  .opts button.ok{border-color:var(--green);background:#e7f4ec;color:#276c4a;font-weight:700}
+  .opts button.no{border-color:var(--red);background:#fbeaea;color:#a33;text-decoration:line-through}
+  .why{font-size:14px;color:var(--muted);margin:10px 0 0;display:none}
+  .why.show{display:block}
+  .score{margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .score b{color:var(--accent);font-size:20px;margin:0 2px}
+
+  .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:28px}
+  .nav a{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 18px;font-size:14px;color:var(--ink)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .nav a.ghost{color:var(--muted)}
+
+  @media(max-width:520px){ h1{font-size:25px} .card{padding:18px} .eq{font-size:21px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="../../../index.html">小学数学</a> ／ <a href="../index.html">苏教版三年级上册</a> ／ 第六单元</p>
+  <h1>第六单元 · 两、三位数除以一位数</h1>
+  <p class="sub">➗ 从最高位开始分，分不完就落下来</p>
+
+  <section class="card">
+    <h2><span class="n">1</span>先会口算</h2>
+    <p class="lead">整十、整百数除以一位数，先想「几个十、几个百」。</p>
+    <ul class="fact">
+      <li>60 ÷ 3 ＝ 20　因为 6 个十 ÷ 3 ＝ 2 个十</li>
+      <li>600 ÷ 3 ＝ 200</li>
+      <li>240 ÷ 3 ＝ 80　因为 24 个十 ÷ 3 ＝ 8 个十</li>
+    </ul>
+    <p class="conclusion">口算的口诀是：<b>先算前面的数，再看末尾剩几个 0</b>。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>分一分，剩几个</h2>
+    <p class="lead">糖平均放进盘子，放不下的就是余数。</p>
+
+    <svg id="plate" viewBox="0 0 420 300" role="img" aria-label="把糖平均分到盘子里">
+      <g id="scene"></g>
+    </svg>
+
+    <div class="ctrl">
+      <label for="nR">糖的颗数</label>
+      <input id="nR" type="range" min="6" max="30" value="30">
+      <span class="val" id="nV">30</span>
+    </div>
+    <div class="ctrl">
+      <label for="kR">盘子数</label>
+      <input id="kR" type="range" min="2" max="6" value="4">
+      <span class="val" id="kV">4</span>
+    </div>
+
+    <p class="eq" id="eq"></p>
+    <p class="say" id="say"></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>竖式：72 ÷ 4 怎么算</h2>
+    <p class="lead">从十位开始分，分不完的落下来接着分。</p>
+
+    <div class="steps" id="steps">
+      <div class="step" data-s="1">
+        <div class="idx">1</div>
+        <div class="txt">先看十位：7 个十 ÷ 4 ＝ <b>1 个十</b>，商写 <b>1</b>，还余下 3 个十。</div>
+      </div>
+      <div class="step" data-s="2">
+        <div class="idx">2</div>
+        <div class="txt">把余下的 3 个十和个位的 2 合成 <b>32</b>。</div>
+      </div>
+      <div class="step" data-s="3">
+        <div class="idx">3</div>
+        <div class="txt">32 ÷ 4 ＝ <b>8</b>，商写在个位。所以 <code>72 ÷ 4 ＝ 18</code>。</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <button class="btn" id="next" type="button">下一步</button>
+      <button class="btn ghost" id="again" type="button">重来</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>算完要验算</h2>
+    <p class="lead">79 ÷ 4 ＝ 19 …… 3，怎么知道对不对？</p>
+
+    <div class="check">
+      商 × 除数 ＋ 余数 ＝ 被除数<br>
+      19 × 4 ＝ 76<br>
+      76 ＋ 3 ＝ <b>79</b>　<span class="ok">✓ 和被除数一样</span>
+    </div>
+
+    <p class="conclusion">验算公式：<b>商 × 除数 ＋ 余数 ＝ 被除数</b>。除尽了就没有余数那一项。</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">5</span>练一练</h2>
+    <p class="lead">五道题。</p>
+    <div id="quiz"></div>
+    <p class="score" id="score">已经答对 <b>0</b> 题</p>
+  </section>
+
+  <nav class="nav">
+    <a class="ghost" href="../第五单元-平移旋转和轴对称/index.html">← 第五单元 · 平移、旋转和轴对称</a>
+    <a class="ghost" href="../../../index.html">回主页</a>
+    <a href="../第七单元-数量关系的分析/index.html">第七单元 · 数量关系的分析（一） →</a>
+  </nav>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var scene = document.getElementById('scene');
+  var nR = document.getElementById('nR');
+  var kR = document.getElementById('kR');
+  var nV = document.getElementById('nV');
+  var kV = document.getElementById('kV');
+  var eq = document.getElementById('eq');
+  var say = document.getElementById('say');
+
+  function el(tag, attrs, text){
+    var e = document.createElementNS(NS, tag);
+    Object.keys(attrs).forEach(function(k){ e.setAttribute(k, attrs[k]); });
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function draw(){
+    var n = parseInt(nR.value, 10);
+    var k = parseInt(kR.value, 10);
+    var q = Math.floor(n / k);
+    var r = n % k;
+
+    nV.textContent = n;
+    kV.textContent = k;
+    scene.innerHTML = '';
+
+    var totalW = 380, gap = 10, x0 = 20, y0 = 46, th = 132;
+    var tw = (totalW - gap * (k - 1)) / k;
+
+    for (var i = 0; i < k; i++){
+      var tx = x0 + i * (tw + gap);
+      scene.appendChild(el('rect', {
+        x: tx, y: y0, width: tw, height: th, rx: 12,
+        fill: '#fdf6ee', stroke: '#e8d9c4', 'stroke-width': 2
+      }));
+
+      for (var j = 0; j < q; j++){
+        var row = Math.floor(j / 4);
+        var col = j % 4;
+        var inRow = Math.min(4, q - row * 4);
+        var startX = tx + tw / 2 - (inRow - 1) * 22 / 2;
+        scene.appendChild(el('circle', {
+          cx: startX + col * 22,
+          cy: y0 + 26 + row * 26,
+          r: 8,
+          fill: '#e8862e',
+          opacity: 0.85
+        }));
+      }
+
+      scene.appendChild(el('text', {
+        x: tx + tw / 2, y: y0 + th - 10,
+        'text-anchor': 'middle', 'font-size': '12', fill: '#8a8078'
+      }, '第 ' + (i + 1) + ' 盘：' + q + ' 颗'));
+    }
+
+    if (r > 0){
+      scene.appendChild(el('text', {
+        x: 210, y: 208, 'text-anchor': 'middle', 'font-size': '13', fill: '#8a8078'
+      }, '剩下 ' + r + ' 颗放不下：'));
+
+      for (var t = 0; t < r; t++){
+        scene.appendChild(el('circle', {
+          cx: 210 - (r - 1) * 11 + t * 22,
+          cy: 240, r: 8, fill: '#4a7fd4', opacity: 0.8
+        }));
+      }
+    } else {
+      scene.appendChild(el('text', {
+        x: 210, y: 220, 'text-anchor': 'middle', 'font-size': '13', fill: '#2f9e68',
+        'font-weight': '700'
+      }, '正好分完，没有剩余'));
+    }
+
+    eq.innerHTML = n + ' ÷ ' + k + ' ＝ <span class="u">' + q + '</span>' +
+                   (r > 0 ? ' …… <span class="r">' + r + '</span>' : '');
+
+    if (r > 0){
+      say.innerHTML = '每盘 ' + q + ' 颗，还剩 ' + r + ' 颗。余数一定要比除数 ' + k + ' 小。';
+    } else {
+      say.innerHTML = '每盘 ' + q + ' 颗，一颗不剩。';
+    }
+  }
+
+  nR.addEventListener('input', draw);
+  kR.addEventListener('input', draw);
+  draw();
+
+  /* ========== 竖式 ========== */
+  var steps = document.querySelectorAll('.step');
+  var stepIdx = 0;
+  function showStep(){
+    Array.prototype.forEach.call(steps, function(s, i){
+      s.classList.toggle('on', i < stepIdx);
+    });
+  }
+  document.getElementById('next').addEventListener('click', function(){
+    if (stepIdx < steps.length){ stepIdx++; showStep(); }
+  });
+  document.getElementById('again').addEventListener('click', function(){
+    stepIdx = 0; showStep();
+  });
+
+  /* ========== 练一练 ========== */
+  var QUIZ = [
+    { q:'60 ÷ 3 等于多少？', opts:['2','20','200'], a:1,
+      why:'6 个十 ÷ 3 ＝ 2 个十，就是 20。' },
+    { q:'84 ÷ 4 等于多少？', opts:['21','22','24'], a:0,
+      why:'8 个十 ÷ 4 ＝ 2 个十，4 ÷ 4 ＝ 1，合起来 21。' },
+    { q:'79 ÷ 4 的商和余数是多少？', opts:['19 …… 3','18 …… 7','19 …… 1'], a:0,
+      why:'4 × 19 ＝ 76，79 － 76 ＝ 3，商 19 余 3。' },
+    { q:'如果 23 × 3 ＋ 2 ＝ 71，那么 71 ÷ 3 的商和余数是（　）。',
+      opts:['23 …… 2','23 …… 3','24 …… 1'], a:0,
+      why:'验算反过来就是答案：商 23，余数 2。' },
+    { q:'一个数除以 8，余数最大是几？', opts:['7','8','9'], a:0,
+      why:'余数必须比除数小，除数是 8，余数最大就是 7。' }
+  ];
+
+  var box = document.getElementById('quiz');
+  var scoreEl = document.getElementById('score');
+  var right = 0;
+
+  QUIZ.forEach(function(item, qi){
+    var wrap = document.createElement('div');
+    wrap.className = 'q';
+    var stem = document.createElement('p');
+    stem.className = 'stem';
+    stem.innerHTML = '<span class="idx">' + (qi + 1) + '.</span>' + item.q;
+    wrap.appendChild(stem);
+
+    var opts = document.createElement('div');
+    opts.className = 'opts';
+    var btns = [];
+    item.opts.forEach(function(label, oi){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){
+        var correct = (oi === item.a);
+        btns.forEach(function(x){ x.disabled = true; });
+        btns[item.a].classList.add('ok');
+        if (!correct) b.classList.add('no');
+        if (correct){ right++; scoreEl.innerHTML = '已经答对 <b>' + right + '</b> 题'; }
+        why.classList.add('show');
+      });
+      btns.push(b);
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    var why = document.createElement('p');
+    why.className = 'why';
+    why.textContent = '💡 ' + item.why;
+    wrap.appendChild(why);
+    box.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>
